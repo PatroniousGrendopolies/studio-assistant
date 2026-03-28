@@ -132,6 +132,46 @@ function getMessageText(message: UIMessage): string {
     .join("");
 }
 
+function FormattedText({ text }: { text: string }) {
+  // Split into lines, render each with inline markdown
+  const lines = text.split("\n");
+  return (
+    <>
+      {lines.map((line, i) => (
+        <span key={i}>
+          {i > 0 && <br />}
+          <InlineMarkdown line={line} />
+        </span>
+      ))}
+    </>
+  );
+}
+
+function InlineMarkdown({ line }: { line: string }) {
+  // Parse **bold** and *italic* into spans
+  const parts: React.ReactNode[] = [];
+  let remaining = line;
+  let key = 0;
+
+  while (remaining.length > 0) {
+    // Bold: **text**
+    const boldMatch = remaining.match(/\*\*(.+?)\*\*/);
+    if (boldMatch && boldMatch.index !== undefined) {
+      if (boldMatch.index > 0) {
+        parts.push(<span key={key++}>{remaining.slice(0, boldMatch.index)}</span>);
+      }
+      parts.push(<strong key={key++} className="font-semibold">{boldMatch[1]}</strong>);
+      remaining = remaining.slice(boldMatch.index + boldMatch[0].length);
+      continue;
+    }
+    // No more matches, push the rest
+    parts.push(<span key={key++}>{remaining}</span>);
+    break;
+  }
+
+  return <>{parts}</>;
+}
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -254,7 +294,7 @@ export default function ChatPage() {
                       Safety Warning
                     </div>
                   )}
-                  {text}
+                  <FormattedText text={text} />
                 </div>
               </div>
             );
