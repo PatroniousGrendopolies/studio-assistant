@@ -241,7 +241,14 @@ export default function ChatPage() {
     <div className="flex h-dvh flex-col bg-white text-black">
       {/* Header */}
       <header className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 py-3">
-        <h1 className="text-base font-bold uppercase tracking-wide text-black">{roomDisplayName}</h1>
+        <div className="flex items-center gap-2">
+          <a href="/" className="rounded-full p-1 text-[#303133] transition-colors hover:bg-gray-100">
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </a>
+          <h1 className="text-base font-bold uppercase tracking-wide text-black">{roomDisplayName}</h1>
+        </div>
         <a
           href="tel:+15146798761"
           className="rounded-lg bg-amber-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-amber-500 active:bg-amber-700"
@@ -253,14 +260,26 @@ export default function ChatPage() {
       {/* Chat thread */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto bg-gray-50 px-4 py-4">
         {messages.length === 0 && (
-          <div className="flex h-full items-center justify-center">
-            <p className="text-center text-sm text-[#303133]">
-              Send a message to get started, or tap{" "}
-              <span className="font-medium text-black">
-                &quot;I don&apos;t know what to say&quot;
-              </span>{" "}
-              below.
-            </p>
+          <div className="flex h-full flex-col items-center justify-center gap-4 px-4">
+            <div className="text-center">
+              <p className="text-lg font-semibold text-black">Welcome to {roomDisplayName}!</p>
+              <p className="mt-1 text-sm text-[#303133]">
+                I know every piece of gear in here. Tell me what you&apos;re working on today, or tap a common issue below.
+              </p>
+            </div>
+            <div className="grid w-full max-w-sm grid-cols-2 gap-2">
+              {SYMPTOM_CATEGORIES.slice(0, 4).map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => handleSymptomTap(cat.message)}
+                  className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-left text-xs text-[#303133] transition-colors hover:border-gray-400 hover:bg-gray-50"
+                >
+                  <SymptomIcon icon={cat.icon} />
+                  <span>{cat.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
