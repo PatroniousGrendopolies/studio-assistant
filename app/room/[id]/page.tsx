@@ -181,6 +181,7 @@ export default function ChatPage() {
   const [showSymptoms, setShowSymptoms] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const transport = useMemo(
     () =>
@@ -205,6 +206,15 @@ export default function ChatPage() {
       el.scrollTop = el.scrollHeight;
     }
   }, [messages]);
+
+  // Auto-resize textarea to fit content
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = Math.min(el.scrollHeight, 120) + "px";
+    }
+  }, [inputValue]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -357,13 +367,20 @@ export default function ChatPage() {
             </svg>
           </button>
 
-          <form onSubmit={handleSubmit} className="flex flex-1 items-center gap-2">
-            <input
-              type="text"
+          <form onSubmit={handleSubmit} className="flex flex-1 items-end gap-2">
+            <textarea
+              ref={textareaRef}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
               placeholder="Describe your issue..."
-              className="flex-1 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm text-black placeholder-gray-400 outline-none transition-colors focus:border-gray-500"
+              rows={1}
+              className="flex-1 resize-none overflow-hidden rounded-2xl border border-gray-300 bg-white px-4 py-2.5 text-sm text-black placeholder-gray-400 outline-none transition-colors focus:border-gray-500"
               disabled={isStreaming}
             />
             <button
