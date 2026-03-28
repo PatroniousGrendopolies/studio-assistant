@@ -345,11 +345,11 @@ export default function ChatPage() {
 
       {/* Input area */}
       <div className="shrink-0 border-t border-gray-200 bg-white px-4 py-3">
-        <div className="mx-auto flex max-w-2xl items-center gap-2">
+        <div className="mx-auto flex max-w-2xl items-end gap-2">
           <button
             type="button"
             onClick={() => setShowSymptoms((v) => !v)}
-            className="shrink-0 rounded-full border border-gray-300 p-2 text-[#303133] transition-colors hover:border-gray-500 hover:text-black"
+            className="mb-0.5 shrink-0 rounded-full border border-gray-300 p-2 text-[#303133] transition-colors hover:border-gray-500 hover:text-black"
             title="I don't know what to say"
           >
             <svg
@@ -386,7 +386,7 @@ export default function ChatPage() {
             <button
               type="submit"
               disabled={!inputValue.trim() || isStreaming}
-              className="shrink-0 rounded-full bg-black p-2.5 text-white transition-opacity disabled:opacity-30"
+              className="mb-0.5 shrink-0 rounded-full bg-black p-2.5 text-white transition-opacity disabled:opacity-30"
             >
               <svg
                 className="h-4 w-4"
