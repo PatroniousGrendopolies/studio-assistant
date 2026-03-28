@@ -87,7 +87,7 @@ async function handleChat(req: Request) {
   if (lastUserMessage) {
     // Handle both UIMessage formats: { parts: [...] } and { content: "..." }
     let userText = "";
-    const msg = lastUserMessage as Record<string, unknown>;
+    const msg = lastUserMessage as unknown as Record<string, unknown>;
     if (Array.isArray(msg.parts)) {
       userText = (msg.parts as Array<{ type?: string; text?: string }>)
         .filter((p) => p.type === "text" && p.text)
@@ -116,7 +116,7 @@ async function handleChat(req: Request) {
   // Normalize messages: if they have `content` string instead of `parts` array,
   // convert to the parts format that convertToModelMessages expects
   const normalizedMessages = messages.map((m) => {
-    const msg = m as Record<string, unknown>;
+    const msg = m as unknown as Record<string, unknown>;
     if (!Array.isArray(msg.parts) && typeof msg.content === "string") {
       return { ...m, parts: [{ type: "text" as const, text: msg.content as string }] };
     }
