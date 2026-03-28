@@ -28,13 +28,13 @@ export default function HomePage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white">
+    <main className="min-h-screen bg-white text-black">
       <div className="mx-auto max-w-lg px-4 py-12">
         <header className="mb-10 text-center">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Welcome to Autoland
+          <h1 className="text-3xl font-bold uppercase tracking-tight text-black">
+            AUTOLAND
           </h1>
-          <p className="mt-2 text-base text-neutral-400">
+          <p className="mt-2 text-base text-[#303133]">
             Select your room to get started
           </p>
         </header>
@@ -44,11 +44,11 @@ export default function HomePage() {
             <Link
               key={room.id}
               href={`/room/${room.id}`}
-              className="block rounded-xl border border-neutral-800 bg-neutral-900 p-5 transition-colors hover:border-neutral-600 hover:bg-neutral-800/70 active:bg-neutral-800"
+              className="block rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-gray-400 hover:bg-gray-50 active:bg-gray-100"
             >
-              <h2 className="text-lg font-semibold">{room.name}</h2>
+              <h2 className="text-lg font-semibold text-black">{room.name}</h2>
               {room.description && (
-                <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">
+                <p className="mt-1.5 text-sm leading-relaxed text-[#303133]">
                   {room.description}
                 </p>
               )}
