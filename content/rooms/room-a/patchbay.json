@@ -1,0 +1,24 @@
+{
+  "layout": "Top row = inputs from wall plates. Bottom row = preamp inputs. Half-normalled: signal flows from top to bottom by default, but you can override with a patch cable.",
+  "connections": [
+    {
+      "from": "Input 1 (top, slot 1)",
+      "to": "API 512c (bottom, slot 1)",
+      "cable": "TT patch cable"
+    },
+    {
+      "from": "Input 2 (top, slot 2)",
+      "to": "Neve 1073 (bottom, slot 2)",
+      "cable": "TT patch cable"
+    },
+    {
+      "from": "Input 3 (top, slot 3)",
+      "to": "Spare (bottom, slot 3)",
+      "cable": "None — unused by default"
+    }
+  ],
+  "tips": [
+    "If you need to use a different preamp, just move the patch cable from the top row to a different bottom row slot.",
+    "Push patch cables in firmly. A loose connection causes intermittent signal."
+  ]
+}

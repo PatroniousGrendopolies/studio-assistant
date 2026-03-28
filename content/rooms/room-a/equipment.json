@@ -1,0 +1,81 @@
+{
+  "microphones": [
+    {
+      "id": "u87",
+      "name": "Neumann U87",
+      "type": "condenser",
+      "phantomRequired": true,
+      "weightLbs": 2.5,
+      "location": "Shelf by the window",
+      "notes": "Heavy. Use heavy tripod stand only."
+    },
+    {
+      "id": "sm7b",
+      "name": "Shure SM7B",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "weightLbs": 1.7,
+      "location": "Desk mount",
+      "notes": "Great for vocals and instruments. No phantom needed."
+    },
+    {
+      "id": "r121",
+      "name": "Royer R-121",
+      "type": "ribbon",
+      "phantomRequired": false,
+      "weightLbs": 0.5,
+      "location": "Padded case under desk",
+      "notes": "NEVER apply phantom power. Will permanently damage."
+    }
+  ],
+  "stands": [
+    {
+      "id": "tripod-heavy",
+      "name": "Heavy Tripod Stand",
+      "maxWeightLbs": 5.0,
+      "location": "Corner by the door"
+    },
+    {
+      "id": "desk-stand",
+      "name": "Small Black Desk Stand",
+      "maxWeightLbs": 1.0,
+      "location": "On the desk"
+    },
+    {
+      "id": "boom-arm",
+      "name": "Boom Arm",
+      "maxWeightLbs": 3.0,
+      "location": "Attached to desk"
+    }
+  ],
+  "preamps": [
+    {
+      "id": "api-512c",
+      "name": "API 512c",
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "patchbayPosition": "Bottom row, slot 1"
+    },
+    {
+      "id": "neve-1073",
+      "name": "Neve 1073",
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "patchbayPosition": "Bottom row, slot 2"
+    }
+  ],
+  "other": [
+    {
+      "id": "headphone-amp",
+      "name": "Headphone Amp",
+      "location": "Shelf above patchbay",
+      "notes": "4 outputs. Use any available jack."
+    },
+    {
+      "id": "di-box",
+      "name": "DI Box",
+      "location": "Cable drawer",
+      "notes": "For connecting guitars and keyboards."
+    }
+  ]
+}

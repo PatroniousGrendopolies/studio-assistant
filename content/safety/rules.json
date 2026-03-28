@@ -1,0 +1,55 @@
+{
+  "rules": [
+    {
+      "id": "phantom-ribbon",
+      "trigger": "Phantom power on ribbon mic",
+      "keywords": [
+        ["phantom", "ribbon"],
+        ["phantom", "royer"],
+        ["phantom", "r-121"],
+        ["phantom", "r121"],
+        ["48v", "ribbon"],
+        ["48v", "royer"]
+      ],
+      "warning": "NEVER engage phantom power with a ribbon microphone connected. This can permanently damage the ribbon element. Phantom power (48V) should only be used with condenser microphones.",
+      "severity": "critical"
+    },
+    {
+      "id": "heavy-mic-light-stand",
+      "trigger": "Heavy mic on lightweight stand",
+      "keywords": [
+        ["u87", "desk stand"],
+        ["u87", "small stand"],
+        ["tube", "desk stand"],
+        ["tube", "small stand"],
+        ["heavy", "small stand"],
+        ["heavy", "desk stand"]
+      ],
+      "warning": "That microphone is too heavy for a lightweight stand. It can tip over and damage the mic (replacement cost: $3,000+). Please use the heavy tripod stand in the corner by the door.",
+      "severity": "high"
+    },
+    {
+      "id": "cable-wrapping",
+      "trigger": "Tight cable wrapping",
+      "keywords": [
+        ["wrap", "cable", "around"],
+        ["wrap", "cable", "tight"],
+        ["coil", "tight"]
+      ],
+      "warning": "Wrapping cables tightly around stands or boom arms can kink and damage the internal wiring. Best practice: coil cables loosely in loops and secure with a velcro strap.",
+      "severity": "medium"
+    },
+    {
+      "id": "hot-plugging-xlr",
+      "trigger": "Plugging/unplugging XLR at high gain",
+      "keywords": [
+        ["plug", "xlr", "gain"],
+        ["unplug", "xlr", "gain"],
+        ["connect", "xlr", "loud"],
+        ["disconnect", "xlr", "loud"]
+      ],
+      "warning": "Plugging or unplugging XLR cables while the preamp gain is up can cause loud pops that damage speakers. Turn down the gain and monitor volume before connecting or disconnecting cables.",
+      "severity": "high"
+    }
+  ]
+}

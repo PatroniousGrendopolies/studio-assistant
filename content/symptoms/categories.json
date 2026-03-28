@@ -1,0 +1,40 @@
+{
+  "categories": [
+    {
+      "id": "no-sound",
+      "label": "No sound",
+      "icon": "volume-x",
+      "message": "I'm not getting any sound at all."
+    },
+    {
+      "id": "mic-not-working",
+      "label": "Mic not working",
+      "icon": "mic-off",
+      "message": "My microphone doesn't seem to be working."
+    },
+    {
+      "id": "cant-hear-myself",
+      "label": "Can't hear myself",
+      "icon": "headphones",
+      "message": "I can't hear myself in my headphones."
+    },
+    {
+      "id": "something-wrong",
+      "label": "Something looks wrong",
+      "icon": "alert-triangle",
+      "message": "Something doesn't look right with the equipment."
+    },
+    {
+      "id": "cable-issue",
+      "label": "Cable / connection",
+      "icon": "cable",
+      "message": "I think there might be a cable or connection problem."
+    },
+    {
+      "id": "dont-know",
+      "label": "I don't know where to start",
+      "icon": "help-circle",
+      "message": "I'm new here and don't know where to begin setting up."
+    }
+  ]
+}
