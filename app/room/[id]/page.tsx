@@ -192,7 +192,7 @@ export default function ChatPage() {
       <header className="flex shrink-0 items-center justify-between border-b border-neutral-800 px-4 py-3">
         <h1 className="text-base font-semibold">{roomDisplayName}</h1>
         <a
-          href="sms:+15551234567&body=I%20need%20help%20in%20the%20studio"
+          href="tel:+15146798761"
           className="rounded-lg bg-amber-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-amber-500 active:bg-amber-700"
         >
           Get Staff Help
