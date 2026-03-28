@@ -8,6 +8,18 @@ import { checkSafetyRules } from "@/lib/safety.ts";
 import { rateLimit } from "@/lib/rate-limit.ts";
 
 export async function POST(req: Request) {
+  try {
+    return await handleChat(req);
+  } catch (err) {
+    console.error("Unhandled error in chat route:", err);
+    return new Response(
+      JSON.stringify({ error: String(err), stack: (err as Error)?.stack }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
+    );
+  }
+}
+
+async function handleChat(req: Request) {
   // ---------------------------------------------------------------------------
   // Parse request body
   // ---------------------------------------------------------------------------
@@ -73,12 +85,17 @@ export async function POST(req: Request) {
   let safetyPrefix = "";
 
   if (lastUserMessage) {
-    const userText = lastUserMessage.parts
-      .filter(
-        (p): p is { type: "text"; text: string } => p.type === "text",
-      )
-      .map((p) => p.text)
-      .join(" ");
+    // Handle both UIMessage formats: { parts: [...] } and { content: "..." }
+    let userText = "";
+    const msg = lastUserMessage as Record<string, unknown>;
+    if (Array.isArray(msg.parts)) {
+      userText = (msg.parts as Array<{ type?: string; text?: string }>)
+        .filter((p) => p.type === "text" && p.text)
+        .map((p) => p.text!)
+        .join(" ");
+    } else if (typeof msg.content === "string") {
+      userText = msg.content;
+    }
 
     const match = checkSafetyRules(userText, safetyRules.rules);
     if (match) {
@@ -96,7 +113,17 @@ export async function POST(req: Request) {
   // Convert UI messages to model messages & stream
   // ---------------------------------------------------------------------------
 
-  const modelMessages = await convertToModelMessages(messages);
+  // Normalize messages: if they have `content` string instead of `parts` array,
+  // convert to the parts format that convertToModelMessages expects
+  const normalizedMessages = messages.map((m) => {
+    const msg = m as Record<string, unknown>;
+    if (!Array.isArray(msg.parts) && typeof msg.content === "string") {
+      return { ...m, parts: [{ type: "text" as const, text: msg.content as string }] };
+    }
+    return m;
+  });
+
+  const modelMessages = await convertToModelMessages(normalizedMessages);
 
   const result = streamText({
     model: anthropic("claude-sonnet-4-20250514"),
