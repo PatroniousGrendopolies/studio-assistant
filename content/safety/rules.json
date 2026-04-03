@@ -1,157 +1,293 @@
 {
   "rules": [
     {
-      "id": "speakers-on-last-off-first",
-      "trigger": "Monitor power-on/off sequence",
+      "id": "mic01",
+      "trigger": "Heavy tube/LDC mic on lightweight stand",
       "keywords": [
-        ["monitors", "power"],
-        ["speakers", "power"],
-        ["genelec", "on"],
-        ["genelec", "off"],
-        ["turn on", "monitors"],
-        ["turn on", "speakers"],
-        ["power on", "monitors"],
-        ["startup", "monitors"],
-        ["shutdown", "monitors"]
+        ["tube", "mic", "stand"],
+        ["tube", "mic", "small"],
+        ["tube", "mic", "light"],
+        ["tube", "mic", "floor"],
+        ["condenser", "stand", "small"],
+        ["condenser", "stand", "light"],
+        ["condenser", "floor", "stand"],
+        ["large", "mic", "small", "stand"],
+        ["heavy", "mic", "stand"]
       ],
-      "warning": "Speakers on LAST, off FIRST. Always. Powering on the monitors before the rest of the signal chain is ready can send loud transient pops through the speakers, which damages the drivers over time. During shutdown, turn monitors off before powering down the computer or power conditioner.",
-      "severity": "critical"
+      "warning": "Heavy tube/LDC mics require heavy-duty stands. Using a light stand risks tipping and fatal damage.",
+      "explanation": "Large tube/LDC mics can weigh 500g-1kg+. Lightweight stands tip easily. One fall can destroy a $5k+ mic.",
+      "safeAlternative": "Always use a heavy-duty boom stand with wide tripod base for large condenser/tube mics.",
+      "severity": "critical",
+      "autoEscalate": true,
+      "equipmentTags": ["tube_mic", "ldc", "mic_stand"]
     },
     {
-      "id": "phantom-ribbon",
+      "id": "mic02",
       "trigger": "Phantom power on ribbon mic",
       "keywords": [
         ["phantom", "ribbon"],
+        ["48v", "ribbon"],
+        ["phantom", "velocity"],
         ["phantom", "royer"],
         ["phantom", "r-121"],
         ["phantom", "r121"],
         ["phantom", "aea"],
-        ["48v", "ribbon"],
         ["48v", "royer"],
-        ["48v", "aea"]
+        ["48v", "aea"],
+        ["48v", "velocity"],
+        ["enable", "phantom"],
+        ["turn on", "phantom"]
       ],
-      "warning": "NEVER engage phantom power with a ribbon microphone connected. This can permanently damage the ribbon element. Phantom power (48V) should only be used with condenser microphones. The AEA ribbon preamp is specifically designed for ribbons and does NOT use 48V phantom.",
-      "severity": "critical"
+      "warning": "Never apply phantom power to a ribbon mic - immediate damage risk!",
+      "explanation": "Phantom power can irreversibly destroy ribbon mic motors in seconds.",
+      "safeAlternative": "Check mic type before powering. Ribbon mics NEVER need phantom power.",
+      "severity": "critical",
+      "autoEscalate": true,
+      "equipmentTags": ["ribbon", "mic", "power"]
     },
     {
-      "id": "preamp-clipping-ad",
-      "trigger": "Driving preamps hard without fader bank",
+      "id": "mic03",
+      "trigger": "Moving mic stand at full extension",
       "keywords": [
-        ["drive", "preamp"],
-        ["push", "preamp"],
-        ["crank", "gain"],
-        ["saturation", "preamp"],
-        ["clipping", "converter"],
-        ["clipping", "ad"],
-        ["hot", "preamp"],
-        ["distortion", "converter"],
-        ["little labs"],
-        ["fader bank"]
+        ["move", "mic", "stand"],
+        ["move", "stand", "extended"],
+        ["shift", "stand"],
+        ["reposition", "stand"],
+        ["reposition", "mic"],
+        ["move", "mic", "tall"],
+        ["carry", "stand"]
       ],
-      "warning": "When you push preamps hard for saturation and harmonic excitement, the output can be hot enough to clip the A/D converters. Use the Little Labs fader bank (channels 1-8) to pad the signal in 3dB steps between the preamp output and the converter input. The Sabatron has 30dB of built-in pad so it doesn't need this. The Psytech is transformer-less and not designed for saturation.",
-      "severity": "high"
+      "warning": "Top-heavy mic stands tip easily if moved fully extended.",
+      "explanation": "Abrupt movement shifts center of gravity and can cause a fall.",
+      "safeAlternative": "Lower the stand before repositioning, then re-extend.",
+      "severity": "warning",
+      "autoEscalate": false,
+      "equipmentTags": ["mic", "stand"]
     },
     {
-      "id": "phantom-talkback",
-      "trigger": "Talkback mic not working",
+      "id": "cable01",
+      "trigger": "Tight cable wrapping around stands",
       "keywords": [
-        ["talkback", "not working"],
-        ["talkback", "no signal"],
-        ["talkback", "quiet"],
-        ["talkback", "phantom"],
-        ["fmr", "phantom"],
-        ["can't hear", "talkback"]
+        ["wrapping", "cable"],
+        ["wrap", "cable"],
+        ["tidying", "cable"],
+        ["tidy", "cable"],
+        ["cable", "around", "stand"],
+        ["wrap", "around", "stand"],
+        ["coil", "cable", "tight"]
       ],
-      "warning": "The talkback mic runs through the FMR preamp and requires phantom power to be enabled. If talkback isn't working, check that phantom power is engaged on the FMR preamp first.",
-      "severity": "medium"
+      "warning": "Wrapping cables tightly around stands damages them over time.",
+      "explanation": "Tight wrapping stresses inner conductors and cracks insulation.",
+      "safeAlternative": "Use over-under coiling. Secure with velcro ties, not around hardware.",
+      "severity": "caution",
+      "autoEscalate": false,
+      "equipmentTags": ["cable", "stand"]
     },
     {
-      "id": "noisy-gear-off-by-default",
-      "trigger": "Noise from synths or Sabatron",
-      "keywords": [
-        ["matrix 1000", "noise"],
-        ["oberheim", "noise"],
-        ["sy-77", "noise"],
-        ["sy77", "noise"],
-        ["sabatron", "noise"],
-        ["sabatron", "hum"],
-        ["high frequency", "noise"],
-        ["mechanical", "noise"],
-        ["buzzing", "synth"],
-        ["whine", "background"]
-      ],
-      "warning": "The Oberheim Matrix 1000s (mechanical noise), Yamaha SY-77 (high-frequency noise), and Sabatron tube preamp (barely audible hum) are left OFF by default because they introduce noise. Only power them on when you're actively using them, and turn them off when you're done.",
-      "severity": "medium"
-    },
-    {
-      "id": "reconnect-mac-cables",
-      "trigger": "Mac Mini connections after laptop use",
-      "keywords": [
-        ["laptop", "mac mini"],
-        ["own laptop", "connect"],
-        ["no screen", "mac"],
-        ["no internet", "mac"],
-        ["mac mini", "not working"],
-        ["hdmi", "mac"],
-        ["usb", "mac"],
-        ["lightning", "mac"],
-        ["cables", "mac mini"],
-        ["reconnect", "mac"]
-      ],
-      "warning": "If someone used their own laptop before your session, they may have disconnected Mac Mini cables. Check that all connections are in place: Ethernet (internet), Lightning (storage + UAD), HDMI (screen), and USB (keyboard/mouse/MIDI). Reconnecting a cable usually solves the issue.",
-      "severity": "medium"
-    },
-    {
-      "id": "heavy-mic-light-stand",
-      "trigger": "Heavy mic on lightweight stand",
-      "keywords": [
-        ["u87", "desk stand"],
-        ["u87", "small stand"],
-        ["u47", "desk stand"],
-        ["u47", "small stand"],
-        ["tube", "desk stand"],
-        ["tube", "small stand"],
-        ["heavy", "small stand"],
-        ["heavy", "desk stand"]
-      ],
-      "warning": "That microphone is too heavy for a lightweight stand. It can tip over and damage the mic (replacement cost: $3,000+). Please use the heavy tripod stand.",
-      "severity": "high"
-    },
-    {
-      "id": "hot-plugging-xlr",
+      "id": "cable02",
       "trigger": "Plugging/unplugging XLR at high gain",
       "keywords": [
+        ["plug", "mic", "gain"],
+        ["plug in", "mic"],
+        ["connect", "mic", "gain"],
+        ["swap", "mic", "gain"],
+        ["swap", "mic"],
+        ["connect", "mic"],
         ["plug", "xlr", "gain"],
         ["unplug", "xlr", "gain"],
-        ["connect", "xlr", "loud"],
-        ["disconnect", "xlr", "loud"]
+        ["disconnect", "mic", "gain"]
       ],
-      "warning": "Plugging or unplugging XLR cables while the preamp gain is up can cause loud pops that damage speakers. Turn down the gain and monitor volume before connecting or disconnecting cables.",
-      "severity": "high"
+      "warning": "Plugging XLR at high gain sends loud pops to speakers - risking damage.",
+      "explanation": "Sudden transients can damage drivers, especially with high-gain preamps.",
+      "safeAlternative": "Bring all gain/faders down before connecting/disconnecting.",
+      "severity": "warning",
+      "autoEscalate": false,
+      "equipmentTags": ["cable", "preamp"]
     },
     {
-      "id": "cable-wrapping",
-      "trigger": "Tight cable wrapping",
+      "id": "cable03",
+      "trigger": "Cables across walkways",
       "keywords": [
-        ["wrap", "cable", "around"],
-        ["wrap", "cable", "tight"],
-        ["coil", "tight"]
+        ["cable", "across", "floor"],
+        ["cable", "floor"],
+        ["run", "cable"],
+        ["long", "cable", "floor"],
+        ["cable", "walkway"],
+        ["cable", "across"]
       ],
-      "warning": "Wrapping cables tightly around stands or boom arms can kink and damage the internal wiring. Best practice: coil cables loosely in loops (over-under method) and secure with a velcro strap.",
-      "severity": "medium"
+      "warning": "Cables across walkways are trip hazards and prone to damage.",
+      "explanation": "Foot traffic abrades cable jackets and creates safety risks.",
+      "safeAlternative": "Route along walls or use a cable ramp across walkways.",
+      "severity": "caution",
+      "autoEscalate": false,
+      "equipmentTags": ["cable", "floor"]
     },
     {
-      "id": "bantam-vs-quarter-inch",
-      "trigger": "Wrong cable type in patchbay",
+      "id": "env01",
+      "trigger": "Improper gear stacking",
       "keywords": [
-        ["quarter inch", "patchbay"],
-        ["1/4", "bantam"],
-        ["wrong cable", "patchbay"],
-        ["doesn't fit", "patchbay"],
-        ["force", "patchbay"]
+        ["put", "on top"],
+        ["stack", "gear"],
+        ["stacking"],
+        ["resting", "on"],
+        ["put", "on top of"],
+        ["stack", "preamp"],
+        ["stack", "amp"],
+        ["pile", "gear"]
       ],
-      "warning": "The Bantam (TT) patchbay uses Bantam/TT cables, which are smaller than standard 1/4\" TRS cables. They look similar but are NOT interchangeable. Forcing a 1/4\" cable into a Bantam jack will damage the jack. If the cable doesn't slide in easily, you're probably using the wrong type.",
-      "severity": "high"
+      "warning": "Stacking gear improperly risks overheating and mechanical damage.",
+      "explanation": "Blocked vents = overheating; stacked weight = broken cases; risk of falling.",
+      "safeAlternative": "Place in rack mounts or on flat, supported surfaces. Never stack tube gear.",
+      "severity": "warning",
+      "autoEscalate": false,
+      "equipmentTags": ["gear", "stacking"]
+    },
+    {
+      "id": "env02",
+      "trigger": "Blocked ventilation on tube gear",
+      "keywords": [
+        ["cover", "tube"],
+        ["cover", "preamp"],
+        ["cover", "amp"],
+        ["cover", "rack"],
+        ["block", "vent"],
+        ["blocking", "vent"],
+        ["put", "over", "rack"],
+        ["behind", "rack"],
+        ["cover", "gear"]
+      ],
+      "warning": "Tube gear must never have blocked ventilation - fire and failure risk.",
+      "explanation": "Tube preamps/amps make lots of heat. Blocked air leads to shutdown or fire.",
+      "safeAlternative": "Allow 2U clearance above and behind tube gear. Never cover vents.",
+      "severity": "warning",
+      "autoEscalate": true,
+      "equipmentTags": ["tube_gear", "ventilation"]
+    },
+    {
+      "id": "env03",
+      "trigger": "Bags or gear on stand legs",
+      "keywords": [
+        ["bag", "stand"],
+        ["bag", "on", "base"],
+        ["weight", "stand"],
+        ["put", "on", "base"],
+        ["gear", "on", "stand", "base"],
+        ["hang", "stand"]
+      ],
+      "warning": "Bags/gear on stand legs can tip stands unexpectedly.",
+      "explanation": "False sense of stability - real safety comes from leg angle and surface.",
+      "safeAlternative": "Only use approved counterweights; tripod legs fully spread on level ground.",
+      "severity": "caution",
+      "autoEscalate": false,
+      "equipmentTags": ["stand", "counterweight"]
+    },
+    {
+      "id": "env04",
+      "trigger": "Drinks near console or gear",
+      "keywords": [
+        ["drink", "console"],
+        ["coffee", "console"],
+        ["water", "console"],
+        ["drink", "near"],
+        ["coffee", "near"],
+        ["water", "near"],
+        ["water bottle", "on"],
+        ["drink", "desk"],
+        ["coffee", "desk"],
+        ["cup", "console"],
+        ["cup", "gear"],
+        ["liquid", "console"]
+      ],
+      "warning": "Spills on consoles and keyboards cause instant, often fatal damage.",
+      "explanation": "Liquid = short circuits; repairs are rarely possible.",
+      "safeAlternative": "Only use covered cups, kept OFF gear surfaces at all times.",
+      "severity": "warning",
+      "autoEscalate": true,
+      "equipmentTags": ["drink", "console"]
+    },
+    {
+      "id": "env05",
+      "trigger": "Dangling cables or adapters stressing connectors",
+      "keywords": [
+        ["adaptor", "dangling"],
+        ["adapter", "dangling"],
+        ["xlr", "trs", "adapter"],
+        ["xlr", "trs"],
+        ["dangling", "cable"],
+        ["heavy", "cable", "hanging"],
+        ["adapter", "hanging"],
+        ["adaptor", "hanging"],
+        ["dangling", "adapter"],
+        ["dangling", "adaptor"]
+      ],
+      "warning": "Dangling cables or adapters stress connectors and cause failures.",
+      "explanation": "Mechanical load wrecks connector pins and jacks, causing failures.",
+      "safeAlternative": "Always support cables, use clips/ties so no strain on connectors.",
+      "severity": "caution",
+      "autoEscalate": false,
+      "equipmentTags": ["cable", "adapter"]
+    },
+    {
+      "id": "console01",
+      "trigger": "Raising gain without signal check",
+      "keywords": [
+        ["turn up", "gain"],
+        ["push", "fader"],
+        ["raise", "volume"],
+        ["raise", "gain"],
+        ["increase", "gain"],
+        ["crank", "gain"],
+        ["boost", "gain"],
+        ["turn up", "preamp"]
+      ],
+      "warning": "Raising gain before confirming signal can send noise/hum to monitors.",
+      "explanation": "Feedback, noise, or sudden loud signals can damage speakers.",
+      "safeAlternative": "Always verify signal chain with minimal gain, then raise slowly.",
+      "severity": "warning",
+      "autoEscalate": false,
+      "equipmentTags": ["console", "preamp", "gain"]
+    },
+    {
+      "id": "console02",
+      "trigger": "Master fader / monitors to max",
+      "keywords": [
+        ["turn up", "monitors"],
+        ["push", "master"],
+        ["max", "volume"],
+        ["max", "monitors"],
+        ["master", "full"],
+        ["monitors", "full"],
+        ["speakers", "max"],
+        ["monitors", "loud"],
+        ["crank", "monitors"],
+        ["crank", "master"]
+      ],
+      "warning": "Never set master fader to full before audio check - speaker-destroying levels possible!",
+      "explanation": "Full master output = instant, possibly irreparable driver damage.",
+      "safeAlternative": "Monitors to minimum, then raise gradually only after confirming inputs.",
+      "severity": "critical",
+      "autoEscalate": true,
+      "equipmentTags": ["console", "speaker", "master_fader"]
+    },
+    {
+      "id": "console03",
+      "trigger": "Swapping mics with phantom power on",
+      "keywords": [
+        ["switch", "mic", "phantom"],
+        ["changing", "mic", "phantom"],
+        ["swap", "mic", "phantom"],
+        ["plugging", "different", "mic"],
+        ["switch", "mic"],
+        ["changing", "mic"],
+        ["swap", "mic"],
+        ["different", "mic", "plug"]
+      ],
+      "warning": "Swapping mics while phantom is on sends damaging pulses - destroying sensitive mics.",
+      "explanation": "Phantom transients can arc through mic components.",
+      "safeAlternative": "Always disable phantom, wait 10s, then swap.",
+      "severity": "critical",
+      "autoEscalate": true,
+      "equipmentTags": ["console", "phantom", "mic"]
     }
   ]
 }

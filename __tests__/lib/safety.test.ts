@@ -7,12 +7,12 @@ const { rules } = loadSafetyRules();
 describe("checkSafetyRules", () => {
   test("returns the phantom-ribbon rule when mentioning phantom power with the Royer", () => {
     const match = checkSafetyRules(
-      "I want to use phantom power with the Royer",
+      "I want to turn on phantom power with the Royer ribbon mic",
       rules,
     );
 
     expect(match).not.toBeNull();
-    expect(match!.ruleId).toBe("phantom-ribbon");
+    expect(match!.ruleId).toBe("mic02");
     expect(match!.severity).toBe("critical");
   });
 
@@ -22,14 +22,24 @@ describe("checkSafetyRules", () => {
     expect(match).toBeNull();
   });
 
-  test("returns the heavy-mic-light-stand rule for u87 on desk stand", () => {
+  test("returns a rule for heavy mic on small stand", () => {
     const match = checkSafetyRules(
-      "put the u87 on the desk stand",
+      "I'm going to put the tube mic on the small stand",
       rules,
     );
 
     expect(match).not.toBeNull();
-    expect(match!.ruleId).toBe("heavy-mic-light-stand");
-    expect(match!.severity).toBe("high");
+    expect(match!.ruleId).toBe("mic01");
+    expect(match!.severity).toBe("critical");
+  });
+
+  test("catches drinks near console", () => {
+    const match = checkSafetyRules(
+      "I'm going to put my coffee near the console",
+      rules,
+    );
+
+    expect(match).not.toBeNull();
+    expect(match!.ruleId).toBe("env04");
   });
 });

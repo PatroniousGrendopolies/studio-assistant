@@ -1,106 +1,109 @@
 {
   "bays": [
     {
-      "id": "bantam-bay",
-      "name": "Bantam (TT) Patchbay",
-      "cableType": "Bantam/TT",
-      "normalType": "full-normal",
-      "description": "Main patchbay connecting preamp outputs to A/D converter inputs. Normaled so signal flows from preamps to converters without any patching needed.",
+      "id": "bay-1",
+      "name": "Bay 1 — Audio Accessories WDBP-9615-SH (Bantam/TT)",
+      "type": "bantam",
+      "description": "Main patchbay. Top row is outputs, bottom row is inputs. Preamp outputs are normaled to A/D inputs.",
       "topRow": {
-        "label": "Preamp Outputs",
-        "channels": [
-          { "position": 1, "source": "1073 Clone Ch 1" },
-          { "position": 2, "source": "1073 Clone Ch 2" },
-          { "position": 3, "source": "1073 Clone Ch 3" },
-          { "position": 4, "source": "1073 Clone Ch 4" },
-          { "position": 5, "source": "API 312 Clone Ch 5" },
-          { "position": 6, "source": "API 312 Clone Ch 6" },
-          { "position": 7, "source": "Pacifica Ch 7" },
-          { "position": 8, "source": "Pacifica Ch 8" },
-          { "position": 9, "source": "AEA Ribbon Preamp Ch 9 (out for repair)" },
-          { "position": 10, "source": "AEA Ribbon Preamp Ch 10 (out for repair)" },
-          { "position": 11, "source": "Sabatron Tube Ch 11" },
-          { "position": 12, "source": "Sabatron Tube Ch 12" },
-          { "position": 13, "source": "Psytech Ch 13" },
-          { "position": 14, "source": "Psytech Ch 14" },
-          { "position": 15, "source": "Psytech Ch 15" },
-          { "position": 16, "source": "Psytech Ch 16" }
+        "label": "OUTPUTS",
+        "sections": [
+          { "label": "Preamp OUTPUTS", "channels": "1-16", "detail": "N72 (1-4), A12 (5-6), Pacifica A/B (7-8), AEA RPQ A/B (9-10), Sebatron (11-12), Sytek (13-16)" },
+          { "label": "MH Line OUTPUTS — LiO-1", "channels": "17-24", "detail": "Metric Halo LiO-1 outputs 1-8" },
+          { "label": "MH Line OUTPUTS — LiO-2", "channels": "25-32", "detail": "Metric Halo LiO-2 outputs 1-8" },
+          { "label": "Outboard OUTPUTS", "detail": "FMR RNC (1-2), Ensoniq DP/4 (1-4), DBX 560A, Lindell PEX (1-2), FET 500 (1-2)" }
         ]
       },
       "bottomRow": {
-        "label": "A/D Converter Inputs",
-        "channels": [
-          { "position": 1, "destination": "Metric Halo LiO8 #1, Input 1" },
-          { "position": 2, "destination": "Metric Halo LiO8 #1, Input 2" },
-          { "position": 3, "destination": "Metric Halo LiO8 #1, Input 3" },
-          { "position": 4, "destination": "Metric Halo LiO8 #1, Input 4" },
-          { "position": 5, "destination": "Metric Halo LiO8 #1, Input 5" },
-          { "position": 6, "destination": "Metric Halo LiO8 #1, Input 6" },
-          { "position": 7, "destination": "Metric Halo LiO8 #1, Input 7" },
-          { "position": 8, "destination": "Metric Halo LiO8 #1, Input 8" },
-          { "position": 9, "destination": "Metric Halo LiO8 #1, Input 9" },
-          { "position": 10, "destination": "Metric Halo LiO8 #1, Input 10" },
-          { "position": 11, "destination": "Metric Halo LiO8 #1, Input 11" },
-          { "position": 12, "destination": "Metric Halo LiO8 #1, Input 12" },
-          { "position": 13, "destination": "Metric Halo LiO8 #1, Input 13" },
-          { "position": 14, "destination": "Metric Halo LiO8 #1, Input 14" },
-          { "position": 15, "destination": "Metric Halo LiO8 #1, Input 15" },
-          { "position": 16, "destination": "Metric Halo LiO8 #1, Input 16" }
+        "label": "INPUTS",
+        "sections": [
+          { "label": "MH Line INPUTS — LiO-1", "channels": "1-8", "detail": "Metric Halo LiO-1 inputs 1-8. Normaled from preamp outputs 1-8." },
+          { "label": "MH Line INPUTS — LiO-2", "channels": "9-16", "detail": "Metric Halo LiO-2 inputs 1-8. Normaled from preamp outputs 9-16." },
+          { "label": "Control Room Mon Out", "channels": "17-18" },
+          { "label": "Live Room Snake Returns A/B/C/D", "channels": "19-22" },
+          { "label": "Outboard INPUTS", "detail": "Vermite MkC-1, FMR RNC (1-2), Ensoniq DP/4 (1-4), DBX 560A, Lindell PEX (1-2), FET 500 (1-2)" }
         ]
       },
-      "inlineGear": {
-        "littleLabsFaderBank": {
-          "channels": "1-8",
-          "position": "Between preamp outputs and A/D inputs",
-          "stepDb": 3,
-          "notes": "Pad signal when preamps are driven hard. Not needed for all sources."
-        }
-      },
-      "tips": [
-        "Plugging into the bottom row breaks the normal — your cable replaces the default preamp-to-converter connection.",
-        "No patching needed for default recording. The normals handle the standard preamp-to-A/D routing.",
-        "Bantam/TT cables are smaller than 1/4\" — don't mix them up or you'll damage the jacks.",
-        "Push cables in firmly. Loose connections cause intermittent signal.",
-        "Pull all patch cables to restore default routing."
-      ]
+      "normaling": "Half-normaled: preamp outputs (top 1-16) are normaled to LiO A/D inputs (bottom 1-16). Inserting a cable in the bottom row breaks the normal and lets you route to a different destination."
     },
     {
-      "id": "trs-bay",
-      "name": "TRS Patchbay",
-      "cableType": "TRS (1/4\")",
-      "description": "Line-level patchbay for synths, outboard gear returns, and direct injection. Used to route line-level signals into the Bantam bay or directly to A/D inputs.",
-      "sections": [
-        {
-          "label": "Synth Outputs",
-          "connections": [
-            { "jack": "Prophet L" },
-            { "jack": "Prophet R" },
-            { "jack": "JX-8P L" },
-            { "jack": "JX-8P R" },
-            { "jack": "SY-77 L" },
-            { "jack": "SY-77 R" },
-            { "jack": "Matrix 1000 A" },
-            { "jack": "Matrix 1000 B" }
-          ]
-        },
-        {
-          "label": "Outboard / Utility",
-          "connections": [
-            { "jack": "Outboard Send/Return jacks" },
-            { "jack": "DI outputs" }
-          ]
-        }
-      ],
-      "tips": [
-        "Synth outputs are line level — loud enough to go straight to the A/D by patching from here to the Bantam bay bottom row.",
-        "To add preamp color to a synth, route from TRS bay to a preamp input instead.",
-        "The Prophet is especially hot — it can bypass the preamp entirely with plenty of level."
-      ]
+      "id": "bay-2",
+      "name": "Bay 2 — Black Lion Audio PBR TRS3 (1/4\" TRS Jack)",
+      "type": "trs",
+      "description": "Line-level TRS patchbay for synths, guest inputs, and outboard sends/returns.",
+      "topRow": {
+        "label": "OUTPUTS (from instruments/gear)",
+        "sections": [
+          { "label": "Guest 1-4", "channels": "1-4", "detail": "Guest input jacks for visiting gear" },
+          { "label": "OB (L/R)", "channels": "5-6", "detail": "Oberheim outputs" },
+          { "label": "707 (L/R)", "channels": "7-8", "detail": "Roland TR-707 outputs" },
+          { "label": "R8 (L/R)", "channels": "9-10", "detail": "Roland R8 outputs" },
+          { "label": "Temp (L/R)", "channels": "11-12", "detail": "Temporary/spare" },
+          { "label": "FMR SC", "channel": "13", "detail": "FMR sidechain" },
+          { "label": "ISO out", "channel": "14", "detail": "Iso booth output" },
+          { "label": "TL out (L/R)", "channels": "19-20", "detail": "Talkback output" },
+          { "label": "BS out (L/R)", "channels": "21-22", "detail": "Bass Station output" }
+        ]
+      },
+      "bottomRow": {
+        "label": "INPUTS (to instruments/gear)",
+        "sections": [
+          { "label": "Proph (L/R)", "channels": "1-2", "detail": "Sequential Prophet '08 inputs" },
+          { "label": "SY (L/R)", "channels": "3-4", "detail": "Yamaha SY77 inputs" },
+          { "label": "JX-8P (L/R)", "channels": "5-6", "detail": "Roland JX-8P inputs" },
+          { "label": "FMR SC", "channel": "13", "detail": "FMR sidechain input" },
+          { "label": "TL in (L/R)", "channels": "19-20", "detail": "Talkback input" },
+          { "label": "BS in (L/R)", "channels": "21-22", "detail": "Bass Station input" }
+        ]
+      }
+    },
+    {
+      "id": "bay-3",
+      "name": "Bay 3 — ART P16 Termination Panel",
+      "type": "trs",
+      "description": "16-point termination panel. C84 preamps, Verville, and Lola 500-series connections.",
+      "topRow": {
+        "sections": [
+          { "label": "C84", "channels": "1-2", "detail": "Millennia-style preamp outputs" },
+          { "label": "Verville", "channels": "3-4", "detail": "Verville outputs" },
+          { "label": "Lola", "channel": "5", "detail": "Lola 500-series module output" }
+        ]
+      },
+      "bottomRow": {
+        "sections": [
+          { "label": "Channels 1-16", "detail": "Termination points" }
+        ]
+      }
+    },
+    {
+      "id": "bay-4",
+      "name": "Bay 4 — ART P16 Termination Panel",
+      "type": "trs",
+      "description": "16-point termination panel mirroring the preamp layout. Direct preamp I/O access.",
+      "topRow": {
+        "sections": [
+          { "label": "N72", "channels": "1-4", "detail": "Neve-style preamp I/O" },
+          { "label": "A12", "channels": "5-6", "detail": "API-style preamp I/O" },
+          { "label": "Pacifica", "channels": "7-8", "detail": "Pacifica preamp I/O" },
+          { "label": "AEA RPQ", "channels": "9-10", "detail": "AEA ribbon preamp I/O" },
+          { "label": "Sebatron", "channels": "11-12", "detail": "Sebatron tube preamp I/O" },
+          { "label": "Sytek", "channels": "13-16", "detail": "Sytek preamp I/O" }
+        ]
+      },
+      "bottomRow": {
+        "sections": [
+          { "label": "Channels 1-16", "detail": "Preamp termination points matching top row" }
+        ]
+      }
     }
   ],
-  "isoBoothConnectivity": {
-    "trsPassthrough": 2,
-    "xlrPassthrough": 6,
-    "notes": "Wall plates in the iso booth pass through to the live room side. Connect from booth wall plate to snake or live room wall panel for routing to preamps."
-  }
+  "tips": [
+    "Bay 1 is the main signal routing hub. Preamp outputs on top are normaled to A/D inputs on bottom. No patching needed for basic recording.",
+    "To bypass a preamp and go straight to A/D: plug your source into the bottom row of Bay 1, breaking the normal.",
+    "To insert outboard: take the preamp output from Bay 1 top row, route to the outboard input, then route the outboard output back to the A/D input on Bay 1 bottom row.",
+    "Bay 2 is for line-level instruments (synths, drum machines). Top row = outputs FROM the instruments, bottom row = inputs TO the instruments.",
+    "Bay 3 and 4 are termination panels that give you direct access to specific preamp and module I/O.",
+    "Bantam (TT) cables for Bay 1. Standard 1/4\" TRS cables for Bays 2, 3, and 4.",
+    "Push patch cables in firmly. A loose connection causes intermittent signal or no signal."
+  ]
 }
