@@ -6,56 +6,17 @@ import { z } from "zod";
 // Zod schemas
 // ---------------------------------------------------------------------------
 
-const MicrophoneSchema = z.object({
+// Flexible gear schema: requires id + name, everything else optional
+const GearItemSchema = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.string(),
-  phantomRequired: z.boolean(),
-  weightLbs: z.number(),
-  location: z.string(),
-  notes: z.string(),
-});
+}).passthrough();
 
-const StandSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  maxWeightLbs: z.number(),
-  location: z.string(),
-});
+// Equipment schema: requires at least one category, all arrays of gear items
+export const EquipmentSchema = z.record(z.string(), z.array(GearItemSchema));
 
-const PreampSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  inputs: z.array(z.string()),
-  hasPhantom: z.boolean(),
-  patchbayPosition: z.string(),
-});
-
-const OtherGearSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  location: z.string(),
-  notes: z.string(),
-});
-
-export const EquipmentSchema = z.object({
-  microphones: z.array(MicrophoneSchema),
-  stands: z.array(StandSchema),
-  preamps: z.array(PreampSchema),
-  other: z.array(OtherGearSchema),
-});
-
-const PatchbayConnectionSchema = z.object({
-  from: z.string(),
-  to: z.string(),
-  cable: z.string(),
-});
-
-export const PatchbaySchema = z.object({
-  layout: z.string(),
-  connections: z.array(PatchbayConnectionSchema),
-  tips: z.array(z.string()),
-});
+// Flexible patchbay schema: accepts any structure with string/array/object values
+export const PatchbaySchema = z.record(z.string(), z.unknown());
 
 const SafetyRuleSchema = z.object({
   id: z.string(),

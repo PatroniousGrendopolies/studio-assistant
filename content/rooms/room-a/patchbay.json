@@ -1,24 +1,106 @@
 {
-  "layout": "Top row = inputs from wall plates. Bottom row = preamp inputs. Half-normalled: signal flows from top to bottom by default, but you can override with a patch cable.",
-  "connections": [
+  "bays": [
     {
-      "from": "Input 1 (top, slot 1)",
-      "to": "API 512c (bottom, slot 1)",
-      "cable": "TT patch cable"
+      "id": "bantam-bay",
+      "name": "Bantam (TT) Patchbay",
+      "cableType": "Bantam/TT",
+      "normalType": "full-normal",
+      "description": "Main patchbay connecting preamp outputs to A/D converter inputs. Normaled so signal flows from preamps to converters without any patching needed.",
+      "topRow": {
+        "label": "Preamp Outputs",
+        "channels": [
+          { "position": 1, "source": "1073 Clone Ch 1" },
+          { "position": 2, "source": "1073 Clone Ch 2" },
+          { "position": 3, "source": "1073 Clone Ch 3" },
+          { "position": 4, "source": "1073 Clone Ch 4" },
+          { "position": 5, "source": "API 312 Clone Ch 5" },
+          { "position": 6, "source": "API 312 Clone Ch 6" },
+          { "position": 7, "source": "Pacifica Ch 7" },
+          { "position": 8, "source": "Pacifica Ch 8" },
+          { "position": 9, "source": "AEA Ribbon Preamp Ch 9 (out for repair)" },
+          { "position": 10, "source": "AEA Ribbon Preamp Ch 10 (out for repair)" },
+          { "position": 11, "source": "Sabatron Tube Ch 11" },
+          { "position": 12, "source": "Sabatron Tube Ch 12" },
+          { "position": 13, "source": "Psytech Ch 13" },
+          { "position": 14, "source": "Psytech Ch 14" },
+          { "position": 15, "source": "Psytech Ch 15" },
+          { "position": 16, "source": "Psytech Ch 16" }
+        ]
+      },
+      "bottomRow": {
+        "label": "A/D Converter Inputs",
+        "channels": [
+          { "position": 1, "destination": "Metric Halo LiO8 #1, Input 1" },
+          { "position": 2, "destination": "Metric Halo LiO8 #1, Input 2" },
+          { "position": 3, "destination": "Metric Halo LiO8 #1, Input 3" },
+          { "position": 4, "destination": "Metric Halo LiO8 #1, Input 4" },
+          { "position": 5, "destination": "Metric Halo LiO8 #1, Input 5" },
+          { "position": 6, "destination": "Metric Halo LiO8 #1, Input 6" },
+          { "position": 7, "destination": "Metric Halo LiO8 #1, Input 7" },
+          { "position": 8, "destination": "Metric Halo LiO8 #1, Input 8" },
+          { "position": 9, "destination": "Metric Halo LiO8 #1, Input 9" },
+          { "position": 10, "destination": "Metric Halo LiO8 #1, Input 10" },
+          { "position": 11, "destination": "Metric Halo LiO8 #1, Input 11" },
+          { "position": 12, "destination": "Metric Halo LiO8 #1, Input 12" },
+          { "position": 13, "destination": "Metric Halo LiO8 #1, Input 13" },
+          { "position": 14, "destination": "Metric Halo LiO8 #1, Input 14" },
+          { "position": 15, "destination": "Metric Halo LiO8 #1, Input 15" },
+          { "position": 16, "destination": "Metric Halo LiO8 #1, Input 16" }
+        ]
+      },
+      "inlineGear": {
+        "littleLabsFaderBank": {
+          "channels": "1-8",
+          "position": "Between preamp outputs and A/D inputs",
+          "stepDb": 3,
+          "notes": "Pad signal when preamps are driven hard. Not needed for all sources."
+        }
+      },
+      "tips": [
+        "Plugging into the bottom row breaks the normal — your cable replaces the default preamp-to-converter connection.",
+        "No patching needed for default recording. The normals handle the standard preamp-to-A/D routing.",
+        "Bantam/TT cables are smaller than 1/4\" — don't mix them up or you'll damage the jacks.",
+        "Push cables in firmly. Loose connections cause intermittent signal.",
+        "Pull all patch cables to restore default routing."
+      ]
     },
     {
-      "from": "Input 2 (top, slot 2)",
-      "to": "Neve 1073 (bottom, slot 2)",
-      "cable": "TT patch cable"
-    },
-    {
-      "from": "Input 3 (top, slot 3)",
-      "to": "Spare (bottom, slot 3)",
-      "cable": "None — unused by default"
+      "id": "trs-bay",
+      "name": "TRS Patchbay",
+      "cableType": "TRS (1/4\")",
+      "description": "Line-level patchbay for synths, outboard gear returns, and direct injection. Used to route line-level signals into the Bantam bay or directly to A/D inputs.",
+      "sections": [
+        {
+          "label": "Synth Outputs",
+          "connections": [
+            { "jack": "Prophet L" },
+            { "jack": "Prophet R" },
+            { "jack": "JX-8P L" },
+            { "jack": "JX-8P R" },
+            { "jack": "SY-77 L" },
+            { "jack": "SY-77 R" },
+            { "jack": "Matrix 1000 A" },
+            { "jack": "Matrix 1000 B" }
+          ]
+        },
+        {
+          "label": "Outboard / Utility",
+          "connections": [
+            { "jack": "Outboard Send/Return jacks" },
+            { "jack": "DI outputs" }
+          ]
+        }
+      ],
+      "tips": [
+        "Synth outputs are line level — loud enough to go straight to the A/D by patching from here to the Bantam bay bottom row.",
+        "To add preamp color to a synth, route from TRS bay to a preamp input instead.",
+        "The Prophet is especially hot — it can bypass the preamp entirely with plenty of level."
+      ]
     }
   ],
-  "tips": [
-    "If you need to use a different preamp, just move the patch cable from the top row to a different bottom row slot.",
-    "Push patch cables in firmly. A loose connection causes intermittent signal."
-  ]
+  "isoBoothConnectivity": {
+    "trsPassthrough": 2,
+    "xlrPassthrough": 6,
+    "notes": "Wall plates in the iso booth pass through to the live room side. Connect from booth wall plate to snake or live room wall panel for routing to preamps."
+  }
 }

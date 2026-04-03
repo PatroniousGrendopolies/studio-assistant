@@ -12,52 +12,25 @@ export function assembleSystemPrompt(
   const titleMatch = room.overview.match(/^#\s+(.+)$/m);
   const roomTitle = titleMatch ? titleMatch[1] : room.id;
 
-  // Format equipment
+  // Format equipment — iterate over all categories dynamically
   const equipmentLines: string[] = [];
-
-  if (room.equipment.microphones.length > 0) {
-    equipmentLines.push("### Microphones");
-    for (const mic of room.equipment.microphones) {
-      equipmentLines.push(
-        `- **${mic.name}** (${mic.type}) — Location: ${mic.location}. Weight: ${mic.weightLbs} lbs. ${mic.notes}`,
-      );
+  for (const [category, items] of Object.entries(room.equipment)) {
+    if (!Array.isArray(items) || items.length === 0) continue;
+    const heading = category.charAt(0).toUpperCase() + category.slice(1);
+    equipmentLines.push(`### ${heading}`);
+    for (const item of items) {
+      const g = item as Record<string, unknown>;
+      const details: string[] = [];
+      if (g.type) details.push(String(g.type));
+      if (g.location) details.push(`Location: ${g.location}`);
+      if (g.channels) details.push(`Channels: ${g.channels}`);
+      if (g.notes) details.push(String(g.notes));
+      equipmentLines.push(`- **${g.name}**${details.length ? ` — ${details.join(". ")}` : ""}`);
     }
   }
 
-  if (room.equipment.stands.length > 0) {
-    equipmentLines.push("### Stands");
-    for (const stand of room.equipment.stands) {
-      equipmentLines.push(
-        `- **${stand.name}** — Location: ${stand.location}. Max weight: ${stand.maxWeightLbs} lbs.`,
-      );
-    }
-  }
-
-  if (room.equipment.preamps.length > 0) {
-    equipmentLines.push("### Preamps");
-    for (const preamp of room.equipment.preamps) {
-      equipmentLines.push(
-        `- **${preamp.name}** — Inputs: ${preamp.inputs.join(", ")}. Phantom: ${preamp.hasPhantom ? "Yes" : "No"}. Patchbay position: ${preamp.patchbayPosition}.`,
-      );
-    }
-  }
-
-  if (room.equipment.other.length > 0) {
-    equipmentLines.push("### Other");
-    for (const item of room.equipment.other) {
-      equipmentLines.push(
-        `- **${item.name}** — Location: ${item.location}. ${item.notes}`,
-      );
-    }
-  }
-
-  // Format patchbay connections
-  const connectionLines = room.patchbay.connections.map(
-    (c) => `- ${c.from} → ${c.to} (${c.cable})`,
-  );
-
-  // Format patchbay tips
-  const tipLines = room.patchbay.tips.map((t) => `- ${t}`);
+  // Format patchbay — render as JSON-like readable text since structure varies
+  const patchbayText = JSON.stringify(room.patchbay, null, 2);
 
   // Format SOPs
   const sopSections = room.sops.map((sop) => sop.content).join("\n\n---\n\n");
@@ -78,14 +51,8 @@ ${room.overview}
 ## Equipment in This Room
 ${equipmentLines.join("\n")}
 
-## Patchbay
-${room.patchbay.layout}
-
-### Default Connections
-${connectionLines.join("\n")}
-
-### Tips
-${tipLines.join("\n")}
+## Patchbay & Signal Routing
+${patchbayText}
 
 ## Standard Operating Procedures
 ${sopSections}
@@ -100,5 +67,6 @@ ${safetyLines.join("\n")}
 - Never assume you can see or monitor hardware. You only know what the user tells you.
 - If you're unsure about something, recommend the user tap the "Get Staff Help" button.
 - When walking through steps, go one at a time. Confirm the user completed each step before moving to the next.
-- If the user seems confused or frustrated, offer the symptom picker: "Would it help if I showed you some common problems to pick from?"`;
+- If the user seems confused or frustrated, offer the symptom picker: "Would it help if I showed you some common problems to pick from?"
+- For access codes, alarm codes, or passwords, always direct users to check their personal onboarding document.`;
 }

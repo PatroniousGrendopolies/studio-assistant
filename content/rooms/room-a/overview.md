@@ -1,33 +1,38 @@
-# Room A — Live Room
+# Room A
 
-Room A is Autoland's main tracking room. It's a large, open live room designed for full-band tracking, vocal sessions, and acoustic instrument recording.
+Room A is a proper analog-meets-digital tracking room. It's built for making records — vocals, full bands, overdubs, synth sessions, whatever you need.
 
-## Specs
+## Layout
 
-- **Dimensions**: 20 ft × 25 ft (500 sq ft), 12 ft ceiling
-- **Flooring**: Hardwood (maple) — great natural reflections, especially for drums and acoustic guitar
-- **Isolation booth**: Attached iso booth with double-pane glass window (line of sight to the main room)
-- **Wall treatment**: Mix of absorption panels and diffusers. The back wall is fully diffused; side walls have adjustable panels you can swing open for more or less reflection
-- **Ambient noise floor**: ~NC-20 (very quiet when HVAC is off)
+The studio is three rooms plus some utility spaces:
 
-## What it's best for
+- **Control room** — where you mix, monitor, and run the session. The MYO console, outboard rack, patchbay, and monitoring all live here.
+- **Live room** — the main tracking space. A 12-channel snake runs back to the control room, and there's a wall panel connecting to the Psytech preamps (channels 13-16). No studio glass between the rooms — you'll use talkback and listenback mics instead.
+- **Iso booth** — connected to the live room. Has 2 TRS passthrough jacks and 6 XLR connections through the wall panel. Great for isolating a vocal or amp.
+- **Mic locker** — between the control room and live room. Key is on the lockbox keychain. This is where the mics, DIs, Cloud Lifters, guitar pedals, expression pedals, and extra headphone amps live.
+- **Computer closet** — houses the Mac Mini and the U47 clone (not enough space in the mic locker for that one).
+- **Fridge/utility room** — has the lockbox with keys.
 
-- Full band tracking (drums in the main room, amps in the iso booth or bleed-managed with gobos)
-- Vocal recording (iso booth or main room with baffles)
-- Acoustic instruments — the hardwood floor and ceiling height give a natural, open sound
-- Percussion and hand drums — the room has a warm low-mid character that flatters most sources
+## What makes it special
 
-## Key gear in this room
+- **16 channels of high-end preamps** — 1073 clones, API 312 clones, Pacifica, AEA, Sabatron tube, and Psytech. Each has its own character.
+- **Analog signal path with digital convenience** — preamps feed through a Bantam patchbay into Metric Halo and Aurora converters. 32+ channels of I/O.
+- **MYO console** — latency-free monitoring with 64-bit summing. You can run high buffer sizes without worrying about monitoring latency.
+- **Synth collection** — Prophet, JX-8P, SY-77, Oberheim Matrix 1000s, and more. All routed through the TRS patchbay with MIDI via Oracle X.
+- **Leslie speaker** — on wheels, drag it in when you need that rotating organ sound.
+- **Two stereo cue mixes** to the live room via the Presonus HP-60 headphone amp.
 
-- **Patchbay**: 48-point TT patchbay on the left wall rack. See the patchbay SOP for routing details.
-- **Headphone system**: 4-output headphone amp on the shelf above the patchbay. Each output has independent volume.
-- **Monitoring**: Nearfield monitors on stands behind the desk. Power-on sequence matters — see the monitor startup SOP.
-- **Mic locker**: Three mics live in this room full-time (U87, SM7B, R-121). Check `equipment.json` for details and handling notes.
+## Good to know
+
+- There's no glass between the control room and live room. Communication happens through the talkback mic (control room) and listenback mic (live room ceiling).
+- The hallway light switch is **outside** the studio door. People miss this constantly.
+- Each client gets their own named folder on the working drive.
+- The studio has both Ableton and Pro Tools, plus Tidal for reference listening.
 
 ## House rules
 
 1. No food or drinks near the equipment. Water bottles with caps are fine on the floor.
-2. Turn off monitors before connecting or disconnecting anything at the patchbay.
-3. Coil cables properly (over-under) and return them to the cable drawer when done.
-4. If something isn't working, check the troubleshooting steps before moving cables around randomly — it usually makes things worse.
-5. The iso booth door seals tightly. Don't slam it — just pull it shut until it clicks.
+2. Speakers on last, off first — always. This prevents loud pops that can damage the monitors.
+3. Coil cables properly (over-under) and return them where you found them.
+4. If something isn't working, check the relevant SOP before moving cables around randomly — it usually makes things worse.
+5. If you used your own laptop, reconnect the Mac Mini cables (HDMI, Lightning, USB, Ethernet) before you leave.

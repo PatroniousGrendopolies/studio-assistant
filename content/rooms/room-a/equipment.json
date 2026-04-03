@@ -1,81 +1,250 @@
 {
   "microphones": [
     {
-      "id": "u87",
-      "name": "Neumann U87",
+      "id": "u47-clone",
+      "name": "U47 Clone",
       "type": "condenser",
       "phantomRequired": true,
-      "weightLbs": 2.5,
-      "location": "Shelf by the window",
-      "notes": "Heavy. Use heavy tripod stand only."
-    },
-    {
-      "id": "sm7b",
-      "name": "Shure SM7B",
-      "type": "dynamic",
-      "phantomRequired": false,
-      "weightLbs": 1.7,
-      "location": "Desk mount",
-      "notes": "Great for vocals and instruments. No phantom needed."
-    },
-    {
-      "id": "r121",
-      "name": "Royer R-121",
-      "type": "ribbon",
-      "phantomRequired": false,
-      "weightLbs": 0.5,
-      "location": "Padded case under desk",
-      "notes": "NEVER apply phantom power. Will permanently damage."
-    }
-  ],
-  "stands": [
-    {
-      "id": "tripod-heavy",
-      "name": "Heavy Tripod Stand",
-      "maxWeightLbs": 5.0,
-      "location": "Corner by the door"
-    },
-    {
-      "id": "desk-stand",
-      "name": "Small Black Desk Stand",
-      "maxWeightLbs": 1.0,
-      "location": "On the desk"
-    },
-    {
-      "id": "boom-arm",
-      "name": "Boom Arm",
-      "maxWeightLbs": 3.0,
-      "location": "Attached to desk"
+      "location": "Computer closet (not enough space in mic locker)",
+      "notes": "Large diaphragm tube-style condenser. Handle with care."
     }
   ],
   "preamps": [
     {
-      "id": "api-512c",
-      "name": "API 512c",
+      "id": "1073-clone-1",
+      "name": "1073 Clone",
+      "type": "Neve-style",
+      "channels": "1-2",
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "patchbayPosition": "Bottom row, slot 1"
+      "notes": "Classic warm, thick character. Channels 1-2 on the sidecar. Snake channels 1-2."
     },
     {
-      "id": "neve-1073",
-      "name": "Neve 1073",
+      "id": "1073-clone-2",
+      "name": "1073 Clone",
+      "type": "Neve-style",
+      "channels": "3-4",
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "patchbayPosition": "Bottom row, slot 2"
+      "notes": "Channels 3-4 on the sidecar. Snake channels 3-4."
+    },
+    {
+      "id": "api-312-1",
+      "name": "API 312 Clone",
+      "type": "API-style",
+      "channels": "5-6",
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "notes": "Punchy, forward midrange. Great on drums and guitars. Snake channels 5-6."
+    },
+    {
+      "id": "pacifica",
+      "name": "Pacifica",
+      "type": "Clean",
+      "channels": "7-8",
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "notes": "Clean and detailed. Snake channels 7-8."
+    },
+    {
+      "id": "aea-ribbon-preamp",
+      "name": "AEA Ribbon Mic Preamp",
+      "type": "Ribbon-optimized",
+      "channels": "9-10",
+      "inputs": ["XLR"],
+      "hasPhantom": false,
+      "status": "out-for-repair",
+      "notes": "Currently out for repair. Designed specifically for ribbon mics."
+    },
+    {
+      "id": "sabatron",
+      "name": "Sabatron Tube Preamp",
+      "type": "Tube",
+      "channels": "11-12",
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "builtInPadDb": 30,
+      "defaultPower": "off",
+      "notes": "Beautiful on vocals. Has 30dB of built-in pad. Left off by default due to barely audible hum."
+    },
+    {
+      "id": "psytech-1",
+      "name": "Psytech",
+      "type": "Transformer-less",
+      "channels": "13-16",
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "notes": "Connected via wall panel in live room (not through the snake). Very clean, transformer-less design. Not meant for saturation."
+    },
+    {
+      "id": "fmr-preamp",
+      "name": "FMR Preamp",
+      "type": "Utility",
+      "channels": null,
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "notes": "Used for the talkback mic. Phantom power must be enabled for talkback to work."
+    }
+  ],
+  "converters": [
+    {
+      "id": "metric-halo-lio8-1",
+      "name": "Metric Halo LiO8 #1",
+      "type": "A/D-D/A",
+      "channels": "1-16",
+      "io": "16 in / 16 out",
+      "notes": "Primary converter. Channels 1-16."
+    },
+    {
+      "id": "metric-halo-lio8-2",
+      "name": "Metric Halo LiO8 #2",
+      "type": "A/D-D/A",
+      "channels": "17-32",
+      "io": "16 in / 16 out",
+      "notes": "Secondary converter. Channels 17-32."
+    },
+    {
+      "id": "aurora-16",
+      "name": "Lynx Aurora 16",
+      "type": "A/D-D/A",
+      "connection": "AES",
+      "notes": "Connected via AES. Additional conversion capacity."
+    }
+  ],
+  "outboard": [
+    {
+      "id": "little-labs-fader-bank",
+      "name": "Little Labs Fader Bank",
+      "type": "Passive fader/pad",
+      "channels": "1-8",
+      "stepDb": 3,
+      "notes": "Inline after channels 1-8, between preamp outputs and A/D inputs. Use when driving preamps hard to prevent clipping the converters. 3dB steps."
+    },
+    {
+      "id": "compressor-channel-strip",
+      "name": "Compressor Channel Strip",
+      "type": "Channel strip",
+      "notes": "Has two preamps built in. Rarely used."
+    },
+    {
+      "id": "lola-500",
+      "name": "Lola 500-Series Module",
+      "type": "500-series",
+      "notes": "500-series format module."
+    }
+  ],
+  "monitoring": [
+    {
+      "id": "genelec-monitors",
+      "name": "Genelec Monitors (pair)",
+      "type": "Active nearfield monitors",
+      "notes": "Power buttons are behind the mounting brackets — tricky to reach. Same spot on both sides (not mirrored). Always turn on LAST, off FIRST."
+    },
+    {
+      "id": "presonus-hp60",
+      "name": "Presonus HP-60",
+      "type": "Headphone amplifier",
+      "outputs": 4,
+      "location": "Live room",
+      "notes": "Always plugged in. 4 headphone outputs, each with volume control. Has blend knob between Cue Mix A and Cue Mix B."
+    },
+    {
+      "id": "myo-console",
+      "name": "MYO Console",
+      "type": "Monitoring console / summing mixer",
+      "notes": "Latency-free monitoring with 64-bit summing. Split monitoring: signal goes to DAW and monitors simultaneously. Has templates for common setups."
+    },
+    {
+      "id": "euphonics-controller",
+      "name": "Euphonics Controller",
+      "type": "Control surface",
+      "notes": "Soft power button is tucked behind the mounting bracket. Does not power on with the main power conditioner — needs individual power-on."
+    }
+  ],
+  "synths": [
+    {
+      "id": "prophet",
+      "name": "Prophet",
+      "type": "Analog polysynth",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "Line-level output, loud enough to bypass preamp and go straight to A/D."
+    },
+    {
+      "id": "jx-8p",
+      "name": "Roland JX-8P",
+      "type": "Analog polysynth",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "Classic Roland analog polysynth."
+    },
+    {
+      "id": "sy-77",
+      "name": "Yamaha SY-77",
+      "type": "FM/AWM hybrid synthesizer",
+      "connection": "TRS patchbay + MIDI",
+      "defaultPower": "off",
+      "notes": "Emits high-frequency noise when powered on. Left off by default — only turn on when needed."
+    },
+    {
+      "id": "matrix-1000-a",
+      "name": "Oberheim Matrix 1000",
+      "type": "Analog rack synth",
+      "connection": "TRS patchbay + MIDI",
+      "hasKeyboard": false,
+      "defaultPower": "off",
+      "notes": "No keyboard — must be played via MIDI from another synth or controller. Mechanical noise when on. Left off by default."
+    },
+    {
+      "id": "matrix-1000-b",
+      "name": "Oberheim Matrix 1000",
+      "type": "Analog rack synth",
+      "connection": "TRS patchbay + MIDI",
+      "hasKeyboard": false,
+      "defaultPower": "off",
+      "notes": "Second unit. No keyboard — must be played via MIDI. Mechanical noise when on. Left off by default."
     }
   ],
   "other": [
     {
-      "id": "headphone-amp",
-      "name": "Headphone Amp",
-      "location": "Shelf above patchbay",
-      "notes": "4 outputs. Use any available jack."
+      "id": "cloud-lifters",
+      "name": "Cloud Lifters",
+      "type": "Inline mic activator",
+      "location": "Mic locker",
+      "notes": "Clean gain boost for dynamic and ribbon mics."
     },
     {
-      "id": "di-box",
-      "name": "DI Box",
-      "location": "Cable drawer",
-      "notes": "For connecting guitars and keyboards."
+      "id": "di-boxes",
+      "name": "DI Boxes",
+      "type": "Direct injection",
+      "location": "Mic locker",
+      "notes": "For connecting guitars, bass, keyboards to preamp inputs."
+    },
+    {
+      "id": "guitar-pedals",
+      "name": "Guitar Pedals",
+      "type": "Effects",
+      "location": "Mic locker",
+      "notes": "Various guitar effects pedals available for sessions."
+    },
+    {
+      "id": "expression-pedals",
+      "name": "Expression Pedals",
+      "type": "MIDI/expression controller",
+      "location": "Mic locker",
+      "notes": "For use with synths and effects."
+    },
+    {
+      "id": "extra-headphone-amps",
+      "name": "Extra Headphone Amps",
+      "type": "Headphone amplifier",
+      "location": "Mic locker",
+      "notes": "Additional headphone amps if the HP-60 isn't enough outputs."
+    },
+    {
+      "id": "leslie-speaker",
+      "name": "Leslie Speaker",
+      "type": "Rotary speaker cabinet",
+      "location": "Live room (on wheels)",
+      "notes": "Working Leslie on wheels. Drag it into position for organ or guitar. Great for that classic rotating speaker sound."
     }
   ]
 }
