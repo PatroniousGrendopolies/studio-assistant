@@ -1,144 +1,285 @@
 {
   "microphones": [
     {
-      "id": "u47-clone",
-      "name": "U47 Clone",
+      "id": "peluso-p67",
+      "name": "Peluso P-67",
       "type": "condenser",
+      "diaphragm": "large",
       "phantomRequired": true,
-      "location": "Computer closet (not enough space in mic locker)",
-      "notes": "Large diaphragm tube-style condenser. Handle with care."
+      "location": "Mic locker",
+      "notes": "Large diaphragm tube-style condenser. Flagship vocal mic."
+    },
+    {
+      "id": "aea-r88-mkii",
+      "name": "AEA R88 mkII",
+      "type": "ribbon",
+      "diaphragm": "large",
+      "phantomRequired": false,
+      "phantomWarning": "Do NOT send phantom power — ribbon element can be destroyed.",
+      "notes": "Stereo ribbon mic. Produces figure-8 pattern from each element. Great for room, drum overhead, piano."
+    },
+    {
+      "id": "telefunken-ak47-mki",
+      "name": "Telefunken AK47 mk I",
+      "type": "condenser",
+      "diaphragm": "large",
+      "phantomRequired": true,
+      "notes": "Large diaphragm tube condenser."
+    },
+    {
+      "id": "akg-c414-xlii",
+      "name": "AKG C414 XLII",
+      "type": "condenser",
+      "diaphragm": "large",
+      "phantomRequired": true,
+      "notes": "Multi-pattern large diaphragm condenser. Versatile — vocals, overheads, acoustic instruments."
+    },
+    {
+      "id": "beyerdynamic-m160",
+      "name": "Beyerdynamic M160 (vintage)",
+      "type": "ribbon",
+      "phantomRequired": false,
+      "phantomWarning": "Do NOT send phantom power — ribbon element can be destroyed.",
+      "notes": "Vintage hypercardioid ribbon. Great on guitar cabs, brass, strings."
+    },
+    {
+      "id": "sennheiser-421-u5-1",
+      "name": "Sennheiser 421 U5 #1 (vintage)",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Vintage dynamic. Classic on toms, guitar cabs, vocals, broadcast."
+    },
+    {
+      "id": "sennheiser-421-u5-2",
+      "name": "Sennheiser 421 U5 #2 (vintage)",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Vintage dynamic. Classic on toms, guitar cabs, vocals, broadcast."
+    },
+    {
+      "id": "warm-audio-wa84-l",
+      "name": "Warm Audio WA-84 (Left)",
+      "type": "condenser",
+      "diaphragm": "small",
+      "phantomRequired": true,
+      "notes": "Stereo pair — left mic. Small diaphragm condenser (Neumann KM84-style). Great for overheads, acoustic guitar, hi-hat."
+    },
+    {
+      "id": "warm-audio-wa84-r",
+      "name": "Warm Audio WA-84 (Right)",
+      "type": "condenser",
+      "diaphragm": "small",
+      "phantomRequired": true,
+      "notes": "Stereo pair — right mic. Small diaphragm condenser (Neumann KM84-style). Great for overheads, acoustic guitar, hi-hat."
+    },
+    {
+      "id": "audio-technica-at4047sv",
+      "name": "Audio Technica AT4047/SV",
+      "type": "condenser",
+      "diaphragm": "large",
+      "phantomRequired": true,
+      "notes": "Large diaphragm condenser. Smooth, warm character. Vocals, voiceover, acoustic instruments."
+    },
+    {
+      "id": "telefunken-m82",
+      "name": "Telefunken M82",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Large diaphragm dynamic. Designed for kick drum. Built-in EQ switches for different characters."
+    },
+    {
+      "id": "beyerdynamic-m88-tg",
+      "name": "Beyerdynamic M88 TG",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Dynamic mic. Versatile — kick drum, bass cab, vocals."
+    },
+    {
+      "id": "beyerdynamic-m201-tg",
+      "name": "Beyerdynamic M201 TG",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Hypercardioid dynamic. Excellent rejection. Snare, toms, guitar cabs."
+    },
+    {
+      "id": "se-vr2-active",
+      "name": "sE VR2 Active",
+      "type": "ribbon",
+      "phantomRequired": true,
+      "notes": "Active ribbon mic — requires phantom power (unlike passive ribbons). Safe to send phantom. Smooth, detailed high end."
+    },
+    {
+      "id": "audio-technica-atm450",
+      "name": "Audio Technica ATM450",
+      "type": "condenser",
+      "diaphragm": "small",
+      "phantomRequired": true,
+      "notes": "Small diaphragm condenser. Side-address design. Overheads, hi-hat, acoustic guitar."
+    },
+    {
+      "id": "shure-sm7b",
+      "name": "Shure SM7B",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Dynamic broadcast mic. Great on vocals, guitar cabs. Benefits from Cloud Lifter or high-gain preamp."
+    },
+    {
+      "id": "shure-beta-91a",
+      "name": "Shure Beta 91A",
+      "type": "condenser",
+      "diaphragm": "small",
+      "phantomRequired": true,
+      "notes": "Boundary condenser. Designed to sit inside a kick drum on a pillow. Half-cardioid pattern."
+    },
+    {
+      "id": "shure-sm57-1",
+      "name": "Shure SM57 #1",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Industry standard dynamic. Snare, guitar cabs, toms, instruments."
+    },
+    {
+      "id": "shure-sm57-2",
+      "name": "Shure SM57 #2",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Industry standard dynamic. Snare, guitar cabs, toms, instruments."
+    },
+    {
+      "id": "shure-sm58-1",
+      "name": "Shure SM58 #1",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Industry standard vocal dynamic."
+    },
+    {
+      "id": "shure-sm58-2",
+      "name": "Shure SM58 #2",
+      "type": "dynamic",
+      "phantomRequired": false,
+      "notes": "Industry standard vocal dynamic."
     }
   ],
   "preamps": [
     {
-      "id": "1073-clone-1",
-      "name": "1073 Clone",
+      "id": "sca-ch01-n72",
+      "name": "Seventh Circle Audio CH01 — N72 modules",
       "type": "Neve-style",
-      "channels": "1-2",
+      "channels": "1-4",
+      "moduleCount": 4,
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "notes": "Classic warm, thick character. Channels 1-2 on the sidecar. Snake channels 1-2."
+      "notes": "4x N72 Neve-style modules in the CH01 chassis. Channels 1-4. Classic warm, thick character."
     },
     {
-      "id": "1073-clone-2",
-      "name": "1073 Clone",
-      "type": "Neve-style",
-      "channels": "3-4",
-      "inputs": ["XLR"],
-      "hasPhantom": true,
-      "notes": "Channels 3-4 on the sidecar. Snake channels 3-4."
-    },
-    {
-      "id": "api-312-1",
-      "name": "API 312 Clone",
+      "id": "sca-ch01-a12",
+      "name": "Seventh Circle Audio CH01 — A12 modules",
       "type": "API-style",
       "channels": "5-6",
+      "moduleCount": 2,
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "notes": "Punchy, forward midrange. Great on drums and guitars. Snake channels 5-6."
+      "notes": "2x A12 API-style modules in the CH01 chassis. Channels 5-6. Punchy, forward midrange. Great on drums and guitars."
     },
     {
-      "id": "pacifica",
-      "name": "Pacifica",
-      "type": "Clean",
+      "id": "sca-ch01-c84",
+      "name": "Seventh Circle Audio CH01 — C84 modules",
+      "type": "Millennia-style",
+      "moduleCount": 2,
+      "inputs": ["XLR"],
+      "hasPhantom": true,
+      "notes": "2x C84 Millennia-style modules in the CH01 chassis. Very clean, transparent. Exact channel position in chassis unclear."
+    },
+    {
+      "id": "a-designs-pacifica",
+      "name": "A Designs Pacifica",
+      "type": "Clean/musical",
       "channels": "7-8",
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "notes": "Clean and detailed. Snake channels 7-8."
+      "notes": "Channels 7-8. Clean and detailed with a musical character."
     },
     {
-      "id": "aea-ribbon-preamp",
-      "name": "AEA Ribbon Mic Preamp",
+      "id": "aea-rpq2",
+      "name": "AEA RPQ2",
       "type": "Ribbon-optimized",
       "channels": "9-10",
       "inputs": ["XLR"],
       "hasPhantom": false,
       "status": "out-for-repair",
-      "notes": "Currently out for repair. Designed specifically for ribbon mics."
+      "notes": "Channels 9-10. Currently out for repair. High-gain preamp designed specifically for ribbon mics. No phantom power."
     },
     {
-      "id": "sabatron",
-      "name": "Sabatron Tube Preamp",
+      "id": "sebatron-vmp-2000e",
+      "name": "Sebatron VMP-2000e",
       "type": "Tube",
       "channels": "11-12",
       "inputs": ["XLR"],
       "hasPhantom": true,
       "builtInPadDb": 30,
       "defaultPower": "off",
-      "notes": "Beautiful on vocals. Has 30dB of built-in pad. Left off by default due to barely audible hum."
+      "notes": "Channels 11-12. Beautiful on vocals. Has 30dB of built-in pad. Left off by default due to barely audible tube hum when powered on."
     },
     {
-      "id": "psytech-1",
-      "name": "Psytech",
+      "id": "sytek-mpx-4a",
+      "name": "Sytek MPX-4A",
       "type": "Transformer-less",
       "channels": "13-16",
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "notes": "Connected via wall panel in live room (not through the snake). Very clean, transformer-less design. Not meant for saturation."
+      "notes": "Channels 13-16. Connected via wall panel in live room (not through the snake). Very clean, transformer-less design. Not meant for saturation."
     },
     {
-      "id": "fmr-preamp",
-      "name": "FMR Preamp",
+      "id": "fmr-rnp",
+      "name": "FMR RNP",
       "type": "Utility",
       "channels": null,
       "inputs": ["XLR"],
       "hasPhantom": true,
-      "notes": "Used for the talkback mic. Phantom power must be enabled for talkback to work."
+      "notes": "Used for the talkback mic. Always connected. Phantom power must be enabled for talkback to work."
     }
   ],
   "converters": [
     {
-      "id": "metric-halo-lio8-1",
-      "name": "Metric Halo LiO8 #1",
+      "id": "metric-halo-lio8-3d-1",
+      "name": "Metric Halo LIO-8 3D +DSP #1",
       "type": "A/D-D/A",
-      "channels": "1-16",
-      "io": "16 in / 16 out",
-      "notes": "Primary converter. Channels 1-16."
+      "io": "16x16 analog",
+      "notes": "Primary converter. 16 channels analog I/O. 3D processing with onboard DSP."
     },
     {
-      "id": "metric-halo-lio8-2",
-      "name": "Metric Halo LiO8 #2",
+      "id": "metric-halo-lio8-3d-2",
+      "name": "Metric Halo LIO-8 3D +DSP #2",
       "type": "A/D-D/A",
-      "channels": "17-32",
-      "io": "16 in / 16 out",
-      "notes": "Secondary converter. Channels 17-32."
+      "io": "16x16 analog",
+      "notes": "Secondary converter. 16 channels analog I/O. 3D processing with onboard DSP."
     },
     {
-      "id": "aurora-16",
-      "name": "Lynx Aurora 16",
-      "type": "A/D-D/A",
-      "connection": "AES",
-      "notes": "Connected via AES. Additional conversion capacity."
-    }
-  ],
-  "outboard": [
-    {
-      "id": "little-labs-fader-bank",
-      "name": "Little Labs Fader Bank",
-      "type": "Passive fader/pad",
-      "channels": "1-8",
-      "stepDb": 3,
-      "notes": "Inline after channels 1-8, between preamp outputs and A/D inputs. Use when driving preamps hard to prevent clipping the converters. 3dB steps."
+      "id": "behringer-ultramatch-pro",
+      "name": "Behringer Ultramatch Pro SRC24/96",
+      "type": "Sample rate converter",
+      "notes": "Used for scratch and talkback only. Not part of the main signal chain."
     },
     {
-      "id": "compressor-channel-strip",
-      "name": "Compressor Channel Strip",
-      "type": "Channel strip",
-      "notes": "Has two preamps built in. Rarely used."
-    },
-    {
-      "id": "lola-500",
-      "name": "Lola 500-Series Module",
-      "type": "500-series",
-      "notes": "500-series format module."
+      "id": "iconnectivity-mioxl",
+      "name": "iConnectivity mioXL",
+      "type": "MIDI interface",
+      "notes": "MIDI routing hub for synths, drum machines, and controllers."
     }
   ],
   "monitoring": [
     {
-      "id": "genelec-monitors",
-      "name": "Genelec Monitors (pair)",
-      "type": "Active nearfield monitors",
-      "notes": "Power buttons are behind the mounting brackets — tricky to reach. Same spot on both sides (not mirrored). Always turn on LAST, off FIRST."
+      "id": "genelec-8341a",
+      "name": "Genelec 8341a \"The Ones\" (pair)",
+      "type": "Active coaxial monitors",
+      "calibration": "GLM 4 room calibration",
+      "notes": "Three-way coaxial point-source monitors with GLM 4 room calibration. Power buttons are behind the mounting brackets — tricky to reach. Same spot on both sides (not mirrored). Always turn on LAST, off FIRST."
+    },
+    {
+      "id": "sennheiser-hd600",
+      "name": "Sennheiser HD600",
+      "type": "Open-back headphones",
+      "notes": "Reference open-back headphones. For critical listening and mixing."
     },
     {
       "id": "presonus-hp60",
@@ -163,53 +304,334 @@
   ],
   "synths": [
     {
-      "id": "prophet",
-      "name": "Prophet",
+      "id": "roland-juno-60",
+      "name": "Roland Juno-60 (Minerva mod)",
       "type": "Analog polysynth",
       "connection": "TRS patchbay + MIDI",
-      "notes": "Line-level output, loud enough to bypass preamp and go straight to A/D."
+      "notes": "Classic analog polysynth with Minerva MIDI retrofit mod."
     },
     {
-      "id": "jx-8p",
-      "name": "Roland JX-8P",
+      "id": "sequential-prophet-08",
+      "name": "Sequential Prophet '08",
       "type": "Analog polysynth",
       "connection": "TRS patchbay + MIDI",
-      "notes": "Classic Roland analog polysynth."
+      "notes": "8-voice analog polysynth. Line-level output, loud enough to bypass preamp and go straight to A/D."
     },
     {
-      "id": "sy-77",
-      "name": "Yamaha SY-77",
+      "id": "yamaha-sy77",
+      "name": "Yamaha SY77",
       "type": "FM/AWM hybrid synthesizer",
       "connection": "TRS patchbay + MIDI",
       "defaultPower": "off",
-      "notes": "Emits high-frequency noise when powered on. Left off by default — only turn on when needed."
+      "notes": "FM synthesis + sample-based AWM. Emits high-frequency noise when powered on. Left off by default — only turn on when needed."
     },
     {
-      "id": "matrix-1000-a",
+      "id": "novation-bass-station-ii",
+      "name": "Novation Bass Station II",
+      "type": "Analog monosynth",
+      "connection": "TRS patchbay + MIDI/USB",
+      "notes": "25-key analog monosynth. Great for bass lines and leads."
+    },
+    {
+      "id": "casio-sk5",
+      "name": "Casio SK-5 (MIDI mod)",
+      "type": "Sampling keyboard",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "Lo-fi sampler keyboard with MIDI mod retrofit."
+    },
+    {
+      "id": "oberheim-matrix-1000",
       "name": "Oberheim Matrix 1000",
       "type": "Analog rack synth",
       "connection": "TRS patchbay + MIDI",
       "hasKeyboard": false,
       "defaultPower": "off",
-      "notes": "No keyboard — must be played via MIDI from another synth or controller. Mechanical noise when on. Left off by default."
+      "notes": "6-voice analog rack synth. 1000 factory presets. No keyboard — must be triggered via MIDI from another synth or controller. Mechanical noise when on. Left off by default."
     },
     {
-      "id": "matrix-1000-b",
-      "name": "Oberheim Matrix 1000",
-      "type": "Analog rack synth",
+      "id": "korg-poly800",
+      "name": "Korg Poly800",
+      "type": "Digital/analog hybrid synth",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "8-voice polysynth with DCOs and analog filter."
+    },
+    {
+      "id": "waldorf-microq",
+      "name": "Waldorf MicroQ",
+      "type": "Virtual analog rack synth",
       "connection": "TRS patchbay + MIDI",
       "hasKeyboard": false,
-      "defaultPower": "off",
-      "notes": "Second unit. No keyboard — must be played via MIDI. Mechanical noise when on. Left off by default."
+      "notes": "Desktop/rack virtual analog synth. No keyboard — trigger via MIDI."
+    },
+    {
+      "id": "fender-rhodes-88-mkii",
+      "name": "Fender Rhodes 88 mk II",
+      "type": "Electric piano",
+      "connection": "TRS patchbay",
+      "notes": "88-key electromechanical piano. Tine-based sound. Classic Rhodes tone."
+    },
+    {
+      "id": "yamaha-u1",
+      "name": "Yamaha U1 Acoustic Piano",
+      "type": "Acoustic upright piano",
+      "location": "Live room",
+      "notes": "Acoustic upright piano. Mic placement required for recording."
+    },
+    {
+      "id": "hammond-a100-leslie-251",
+      "name": "Hammond A100 Organ + Leslie 251 Rotary Speaker",
+      "type": "Tonewheel organ + rotary speaker",
+      "location": "Live room",
+      "notes": "Tonewheel organ with matching Leslie 251 rotary cabinet. Leslie is on wheels — can drag into position. Great for organ and guitar effects."
+    },
+    {
+      "id": "elka-panther-300",
+      "name": "Elka Panther 300 Combo Organ",
+      "type": "Combo organ",
+      "connection": "TRS patchbay",
+      "notes": "Italian combo organ. Vintage transistor sound."
     }
   ],
-  "other": [
+  "drums_and_machines": [
+    {
+      "id": "roland-r8",
+      "name": "Roland R8",
+      "type": "Drum machine",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "Sample-based drum machine with individual outputs."
+    },
+    {
+      "id": "roland-tr-707",
+      "name": "Roland TR-707",
+      "type": "Drum machine",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "Classic digital drum machine. Individual outputs."
+    },
+    {
+      "id": "mode-machines-xoxbox",
+      "name": "Mode Machines XOXBOX",
+      "type": "Analog bass synth / sequencer",
+      "connection": "TRS patchbay + MIDI",
+      "notes": "TB-303 clone with built-in sequencer. Acid bass lines."
+    }
+  ],
+  "guitars_and_amps": [
+    {
+      "id": "ampeg-v4b",
+      "name": "Ampeg V4B Reissue + SVT212AV Cab",
+      "type": "Bass amp + cab",
+      "notes": "100W all-tube bass head with 2x12 cab."
+    },
+    {
+      "id": "vox-ac30-hw",
+      "name": "Vox AC30 Handwired",
+      "type": "Guitar amp",
+      "notes": "30W handwired all-tube combo. Classic British chime and crunch."
+    },
+    {
+      "id": "fender-twin-reverb",
+      "name": "Fender Twin Reverb (silverface)",
+      "type": "Guitar amp",
+      "notes": "Silverface era. Clean headroom for days. Built-in reverb and tremolo."
+    },
+    {
+      "id": "fender-vibrolux",
+      "name": "Fender Vibrolux (brownface)",
+      "type": "Guitar amp",
+      "notes": "Brownface era. Warm, round character with vibrato circuit."
+    },
+    {
+      "id": "dr-z-maz-38",
+      "name": "Dr. Z Maz 38",
+      "type": "Guitar amp",
+      "notes": "38W all-tube. EL84 power section. Responsive to picking dynamics."
+    },
+    {
+      "id": "valco-sportsman",
+      "name": "Valco Sportsman",
+      "type": "Guitar amp",
+      "notes": "Vintage Valco combo. Raw, lo-fi character."
+    },
+    {
+      "id": "roland-jc-120",
+      "name": "Roland JC-120",
+      "type": "Guitar amp",
+      "notes": "Solid-state stereo combo. Pristine cleans with built-in chorus."
+    },
+    {
+      "id": "toetags-5f1-champ",
+      "name": "Toetags Electronics 5F1 Champ",
+      "type": "Guitar amp",
+      "notes": "Handbuilt 5F1 Champ circuit. Low-wattage tube amp. Great for recording at manageable volumes."
+    },
+    {
+      "id": "fender-65-jazzmaster-avri",
+      "name": "Fender '65 Jazzmaster AVRI with Lollar Pickups",
+      "type": "Electric guitar",
+      "notes": "American Vintage Reissue Jazzmaster with aftermarket Lollar pickups."
+    },
+    {
+      "id": "fender-johnny-marr-jaguar",
+      "name": "Fender Johnny Marr Jaguar",
+      "type": "Electric guitar",
+      "notes": "Johnny Marr signature Jaguar."
+    },
+    {
+      "id": "fender-mustang-1966",
+      "name": "Fender Mustang 1966",
+      "type": "Electric guitar",
+      "notes": "Original 1966 Fender Mustang. Vintage — handle with care."
+    },
+    {
+      "id": "gl-asat-custom",
+      "name": "G&L ASAT Custom",
+      "type": "Electric guitar",
+      "notes": "Telecaster-style guitar with G&L MFD pickups."
+    },
+    {
+      "id": "fender-avri-stratocaster",
+      "name": "Fender AVRI Stratocaster",
+      "type": "Electric guitar",
+      "notes": "American Vintage Reissue Stratocaster."
+    },
+    {
+      "id": "pedals-collection",
+      "name": "Pedal collection",
+      "type": "Guitar/bass effects",
+      "brands": ["Strymon", "Empress", "Chase Bliss", "ZVEX", "Pigtronix", "Moog", "Dr. Scientist", "EHX", "EQD", "Blackout Effectors", "Toetags Electronics"],
+      "location": "Pedal drawer / live room",
+      "notes": "Extensive pedal collection from Strymon, Empress, Chase Bliss, ZVEX, Pigtronix, Moog, Dr. Scientist, EHX, EQD, Blackout Effectors, Toetags Electronics and more."
+    }
+  ],
+  "outboard": [
+    {
+      "id": "little-labs-fader-bank",
+      "name": "Little Labs Inline Fader Bank",
+      "type": "Passive fader/pad",
+      "channels": "1-8",
+      "notes": "Inline after channels 1-8, between preamp outputs and A/D inputs. Pads signal to prevent converter clipping when driving preamps hard."
+    },
+    {
+      "id": "lola-500",
+      "name": "Lola 500-Series Module",
+      "type": "500-series",
+      "notes": "500-series format module."
+    }
+  ],
+  "software": [
+    {
+      "id": "mac-mini-m1",
+      "name": "M1 Mac Mini",
+      "type": "Computer",
+      "specs": "16 GB RAM",
+      "notes": "Studio computer. Runs all DAWs and plugins."
+    },
+    {
+      "id": "pro-tools-studio",
+      "name": "Pro Tools Studio",
+      "type": "DAW",
+      "notes": "Primary DAW for tracking and mixing."
+    },
+    {
+      "id": "logic-pro",
+      "name": "Logic Pro",
+      "type": "DAW",
+      "notes": "Apple DAW. Full suite of virtual instruments and effects."
+    },
+    {
+      "id": "ableton-live-12-suite",
+      "name": "Ableton Live 12 Suite",
+      "type": "DAW",
+      "notes": "Electronic production, live performance, session-based workflow."
+    },
+    {
+      "id": "uad-octo-pcie",
+      "name": "UAD Octo PCIe",
+      "type": "DSP accelerator + plugins",
+      "notes": "UAD DSP card with extensive plugin library. Hardware-accelerated processing."
+    },
+    {
+      "id": "fabfilter-pro-bundle",
+      "name": "FabFilter Pro Bundle",
+      "type": "Plugin suite",
+      "notes": "Includes Pro-Q, Pro-C, Pro-L, Pro-R, Pro-MB, Pro-DS, etc."
+    },
+    {
+      "id": "soundtoys-5-bundle",
+      "name": "Soundtoys 5 Bundle",
+      "type": "Plugin suite",
+      "notes": "Creative effects — Decapitator, EchoBoy, PrimalTap, Crystallizer, etc."
+    },
+    {
+      "id": "izotope-rx9",
+      "name": "iZotope RX 9",
+      "type": "Audio repair suite",
+      "notes": "Noise reduction, spectral editing, audio restoration."
+    },
+    {
+      "id": "celemony-melodyne",
+      "name": "Celemony Melodyne",
+      "type": "Pitch correction / editing",
+      "notes": "Polyphonic pitch editing and correction."
+    }
+  ],
+  "rehearsal_pa": [
+    {
+      "id": "ah-mixwizard3",
+      "name": "Allen & Heath MixWizard3 16:2",
+      "type": "Analog mixer",
+      "notes": "16-channel analog mixer for the rehearsal PA system."
+    },
+    {
+      "id": "jbl-prx712-1",
+      "name": "JBL PRX712 #1",
+      "type": "Powered main speaker",
+      "notes": "12\" powered PA main. Part of the rehearsal PA system."
+    },
+    {
+      "id": "jbl-prx712-2",
+      "name": "JBL PRX712 #2",
+      "type": "Powered main speaker",
+      "notes": "12\" powered PA main. Part of the rehearsal PA system."
+    },
+    {
+      "id": "alto-tx208-1",
+      "name": "Alto TX208 #1",
+      "type": "Powered monitor/fill",
+      "notes": "8\" powered speaker used as monitor or fill."
+    },
+    {
+      "id": "alto-tx208-2",
+      "name": "Alto TX208 #2",
+      "type": "Powered monitor/fill",
+      "notes": "8\" powered speaker used as monitor or fill."
+    },
+    {
+      "id": "klark-teknik-dn360",
+      "name": "Klark Teknik DN360",
+      "type": "Graphic EQ",
+      "notes": "Dual-channel 1/3-octave graphic EQ for PA tuning."
+    },
+    {
+      "id": "klark-teknik-dn504",
+      "name": "Klark Teknik DN504",
+      "type": "Compressor",
+      "notes": "4-channel compressor/limiter for PA protection and dynamics."
+    },
+    {
+      "id": "tc-electronic-m-one-xl",
+      "name": "TC Electronic M-One XL",
+      "type": "Effects processor",
+      "notes": "Dual-engine effects processor. Reverb and delay for rehearsal PA."
+    }
+  ],
+  "accessories": [
     {
       "id": "cloud-lifters",
       "name": "Cloud Lifters",
       "type": "Inline mic activator",
       "location": "Mic locker",
-      "notes": "Clean gain boost for dynamic and ribbon mics."
+      "notes": "Clean gain boost for dynamic and ribbon mics. Requires phantom power from preamp to operate (phantom does not pass through to the mic)."
     },
     {
       "id": "di-boxes",
@@ -217,13 +639,6 @@
       "type": "Direct injection",
       "location": "Mic locker",
       "notes": "For connecting guitars, bass, keyboards to preamp inputs."
-    },
-    {
-      "id": "guitar-pedals",
-      "name": "Guitar Pedals",
-      "type": "Effects",
-      "location": "Mic locker",
-      "notes": "Various guitar effects pedals available for sessions."
     },
     {
       "id": "expression-pedals",
@@ -237,14 +652,7 @@
       "name": "Extra Headphone Amps",
       "type": "Headphone amplifier",
       "location": "Mic locker",
-      "notes": "Additional headphone amps if the HP-60 isn't enough outputs."
-    },
-    {
-      "id": "leslie-speaker",
-      "name": "Leslie Speaker",
-      "type": "Rotary speaker cabinet",
-      "location": "Live room (on wheels)",
-      "notes": "Working Leslie on wheels. Drag it into position for organ or guitar. Great for that classic rotating speaker sound."
+      "notes": "Additional headphone amps if the HP-60 doesn't have enough outputs."
     }
   ]
 }
