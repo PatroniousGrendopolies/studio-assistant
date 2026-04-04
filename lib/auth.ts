@@ -13,19 +13,15 @@ export const SESSION_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds
 
 export function verifyPassword(password: string): boolean {
   const expected = process.env.ADMIN_PASSWORD;
-  console.log("[auth] ADMIN_PASSWORD set:", !!expected, "length:", expected?.length, "input length:", password?.length);
   if (!expected || !password) return false;
 
-  const a = new TextEncoder().encode(password);
-  const b = new TextEncoder().encode(expected);
+  // Use Node.js crypto.timingSafeEqual for constant-time comparison
+  const { timingSafeEqual } = require("crypto") as typeof import("crypto");
+  const a = Buffer.from(password);
+  const b = Buffer.from(expected);
 
   if (a.byteLength !== b.byteLength) return false;
-
-  let result = 0;
-  for (let i = 0; i < a.byteLength; i++) {
-    result |= (a[i] ?? 0) ^ (b[i] ?? 0);
-  }
-  return result === 0;
+  return timingSafeEqual(a, b);
 }
 
 // ---------------------------------------------------------------------------
