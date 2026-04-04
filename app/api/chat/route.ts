@@ -169,7 +169,13 @@ async function handleChat(req: Request) {
 
   const result = streamText({
     model: anthropic("claude-sonnet-4-20250514"),
-    system: systemPrompt,
+    system: {
+      role: "system" as const,
+      content: systemPrompt,
+      providerOptions: {
+        anthropic: { cacheControl: { type: "ephemeral" } },
+      },
+    },
     messages: modelMessages,
     onFinish: async ({ text }) => {
       if (conversationId && text) {
