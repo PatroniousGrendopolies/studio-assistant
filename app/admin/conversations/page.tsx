@@ -1,6 +1,21 @@
 import Link from "next/link";
 import { getStats, listConversations } from "@/lib/db";
 
+function formatDuration(startedAt: string, lastMessageAt: string | null): string {
+  if (!lastMessageAt) return "—";
+  const start = new Date(startedAt).getTime();
+  const end = new Date(lastMessageAt).getTime();
+  const diffMs = end - start;
+  if (diffMs < 1000) return "<1s";
+  const diffSec = Math.floor(diffMs / 1000);
+  if (diffSec < 60) return `${diffSec}s`;
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `${diffMin}m`;
+  const diffHr = Math.floor(diffMin / 60);
+  const remainMin = diffMin % 60;
+  return `${diffHr}h ${remainMin}m`;
+}
+
 export default async function ConversationsPage() {
   const [stats, conversations] = await Promise.all([
     getStats(),
@@ -44,6 +59,9 @@ export default async function ConversationsPage() {
                   Started
                 </th>
                 <th className="px-4 py-3 font-medium text-gray-600">
+                  Length
+                </th>
+                <th className="px-4 py-3 font-medium text-gray-600">
                   Messages
                 </th>
                 <th className="px-4 py-3 font-medium text-gray-600">
@@ -64,11 +82,15 @@ export default async function ConversationsPage() {
                   </td>
                   <td className="px-4 py-3 text-gray-600">
                     {new Date(conv.started_at).toLocaleString("en-US", {
+                      timeZone: "America/New_York",
                       month: "short",
                       day: "numeric",
                       hour: "numeric",
                       minute: "2-digit",
                     })}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">
+                    {formatDuration(conv.started_at, conv.last_message_at)}
                   </td>
                   <td className="px-4 py-3 text-gray-600">
                     {conv.message_count}

@@ -21,6 +21,7 @@ export interface Conversation {
   room_id: string;
   started_at: string;
   topic: string | null;
+  last_message_at: string | null;
   message_count: number;
   has_flags: boolean;
 }
@@ -145,6 +146,12 @@ export async function saveMessage(
   });
 
   if (error) throw error;
+
+  // Update last_message_at for session length tracking
+  await sb
+    .from("conversations")
+    .update({ last_message_at: new Date().toISOString() })
+    .eq("id", conversationId);
 }
 
 // ---------------------------------------------------------------------------
@@ -323,7 +330,7 @@ export async function getConversation(
 
   const { data: convRow, error: convError } = await sb
     .from("conversations")
-    .select("id, session_id, room_id, started_at, topic")
+    .select("id, session_id, room_id, started_at, topic, last_message_at")
     .eq("id", id)
     .single();
 
@@ -375,6 +382,7 @@ export async function getConversation(
       room_id: convRow.room_id as string,
       started_at: convRow.started_at as string,
       topic: (convRow.topic as string) ?? null,
+      last_message_at: (convRow.last_message_at as string) ?? null,
       message_count: messages.length,
       has_flags: (flags ?? []).length > 0,
     },
