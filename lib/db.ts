@@ -254,8 +254,8 @@ export async function listConversations(
 
   const sb = createClient();
   let query = sb
-    .from("conversations")
-    .select("id, session_id, room_id, started_at")
+    .from("conversations_with_stats")
+    .select("id, session_id, room_id, started_at, message_count, has_flags")
     .order("started_at", { ascending: false })
     .limit(100);
 
@@ -263,43 +263,9 @@ export async function listConversations(
     query = query.eq("room_id", filter.roomId);
   }
 
-  const { data: rows, error } = await query;
+  const { data, error } = await query;
   if (error) throw error;
-  if (!rows || rows.length === 0) return [];
-
-  // Enrich with message counts and flag status
-  const result: Conversation[] = [];
-  for (const row of rows) {
-    const { count: msgCount } = await sb
-      .from("messages")
-      .select("id", { count: "exact", head: true })
-      .eq("conversation_id", row.id);
-
-    const { data: msgIds } = await sb
-      .from("messages")
-      .select("id")
-      .eq("conversation_id", row.id);
-
-    let hasFlags = false;
-    if (msgIds && msgIds.length > 0) {
-      const { count: flagCount } = await sb
-        .from("flags")
-        .select("id", { count: "exact", head: true })
-        .in("message_id", msgIds.map((m) => m.id));
-      hasFlags = (flagCount ?? 0) > 0;
-    }
-
-    result.push({
-      id: row.id,
-      session_id: row.session_id,
-      room_id: row.room_id,
-      started_at: row.started_at,
-      message_count: msgCount ?? 0,
-      has_flags: hasFlags,
-    });
-  }
-
-  return result;
+  return (data as Conversation[]) ?? [];
 }
 
 /**
