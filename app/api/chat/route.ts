@@ -173,7 +173,7 @@ async function handleChat(req: Request) {
       role: "system" as const,
       content: systemPrompt,
       providerOptions: {
-        anthropic: { cacheControl: { type: "ephemeral" } },
+        anthropic: { cacheControl: { type: "ephemeral", ttl: "1h" } },
       },
     },
     messages: modelMessages,
