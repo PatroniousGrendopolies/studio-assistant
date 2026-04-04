@@ -1,15 +1,10 @@
 import Link from "next/link";
 import { getStats, listConversations } from "@/lib/db";
 
-export default async function ConversationsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ room?: string }>;
-}) {
-  const { room } = await searchParams;
+export default async function ConversationsPage() {
   const [stats, conversations] = await Promise.all([
     getStats(),
-    listConversations(room ? { roomId: room } : undefined),
+    listConversations(),
   ]);
 
   const statCards = [
@@ -34,19 +29,6 @@ export default async function ConversationsPage({
         ))}
       </div>
 
-      {/* Filter indicator */}
-      {room && (
-        <div className="mb-4 flex items-center gap-2 text-sm text-gray-600">
-          <span>Filtered by room:</span>
-          <span className="rounded-md bg-gray-100 px-2 py-0.5 font-mono text-xs">
-            {room}
-          </span>
-          <Link href="/admin/conversations" className="text-black underline">
-            Clear
-          </Link>
-        </div>
-      )}
-
       {/* Conversations table */}
       {conversations.length === 0 ? (
         <div className="rounded-xl border border-gray-200 px-6 py-12 text-center text-sm text-gray-500">
@@ -57,7 +39,7 @@ export default async function ConversationsPage({
           <table className="w-full text-left text-sm">
             <thead className="border-b border-gray-200 bg-gray-50">
               <tr>
-                <th className="px-4 py-3 font-medium text-gray-600">Room</th>
+                <th className="px-4 py-3 font-medium text-gray-600">Topic</th>
                 <th className="px-4 py-3 font-medium text-gray-600">
                   Started
                 </th>
@@ -75,9 +57,9 @@ export default async function ConversationsPage({
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/conversations/${conv.id}`}
-                      className="font-mono text-xs hover:underline"
+                      className="text-black hover:underline"
                     >
-                      {conv.room_id}
+                      {conv.topic || "Untitled conversation"}
                     </Link>
                   </td>
                   <td className="px-4 py-3 text-gray-600">

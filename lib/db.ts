@@ -20,6 +20,7 @@ export interface Conversation {
   session_id: string;
   room_id: string;
   started_at: string;
+  topic: string | null;
   message_count: number;
   has_flags: boolean;
 }
@@ -80,6 +81,48 @@ export async function upsertConversation(
 
   if (error) throw error;
   return data?.id ?? null;
+}
+
+/**
+ * Generate a brief topic summary for a conversation using Claude.
+ * Called once after the first assistant response.
+ */
+export async function generateTopic(
+  conversationId: string,
+  userMessage: string,
+): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+
+  const sb = createClient();
+
+  // Check if topic already exists
+  const { data: conv } = await sb
+    .from("conversations")
+    .select("topic")
+    .eq("id", conversationId)
+    .single();
+
+  if (conv?.topic) return;
+
+  try {
+    const { generateText } = await import("ai");
+    const { anthropic } = await import("@ai-sdk/anthropic");
+
+    const { text } = await generateText({
+      model: anthropic("claude-haiku-4-5-20251001"),
+      prompt: `Summarize this studio user's question in 6 words or fewer. No punctuation. Examples: "Mic not picking up sound", "Setting up headphone mix", "Patchbay routing help needed"\n\nUser message: "${userMessage}"`,
+    });
+
+    const topic = text.trim().slice(0, 80);
+    if (topic) {
+      await sb
+        .from("conversations")
+        .update({ topic })
+        .eq("id", conversationId);
+    }
+  } catch (err) {
+    console.error("Failed to generate topic:", err);
+  }
 }
 
 /**
@@ -280,7 +323,7 @@ export async function getConversation(
 
   const { data: convRow, error: convError } = await sb
     .from("conversations")
-    .select("id, session_id, room_id, started_at")
+    .select("id, session_id, room_id, started_at, topic")
     .eq("id", id)
     .single();
 
@@ -331,6 +374,7 @@ export async function getConversation(
       session_id: convRow.session_id as string,
       room_id: convRow.room_id as string,
       started_at: convRow.started_at as string,
+      topic: (convRow.topic as string) ?? null,
       message_count: messages.length,
       has_flags: (flags ?? []).length > 0,
     },

@@ -6,7 +6,7 @@ import { loadRoom, loadSafetyRules } from "@/lib/content.ts";
 import { assembleSystemPrompt } from "@/lib/prompt.ts";
 import { checkSafetyRules } from "@/lib/safety.ts";
 import { rateLimit } from "@/lib/rate-limit.ts";
-import { upsertConversation, saveMessage, getActiveCorrections } from "@/lib/db.ts";
+import { upsertConversation, saveMessage, getActiveCorrections, generateTopic } from "@/lib/db.ts";
 
 export async function POST(req: Request) {
   try {
@@ -99,10 +99,10 @@ async function handleChat(req: Request) {
     .find((m) => m.role === "user");
 
   let safetyPrefix = "";
+  let userText = "";
 
   if (lastUserMessage) {
     // Handle both UIMessage formats: { parts: [...] } and { content: "..." }
-    let userText = "";
     const msg = lastUserMessage as unknown as Record<string, unknown>;
     if (Array.isArray(msg.parts)) {
       userText = (msg.parts as Array<{ type?: string; text?: string }>)
@@ -177,6 +177,12 @@ async function handleChat(req: Request) {
           await saveMessage(conversationId, "assistant", text);
         } catch (err) {
           console.error("Failed to save assistant message:", err);
+        }
+        // Generate topic summary from the first user message (non-blocking)
+        if (userText) {
+          generateTopic(conversationId, userText).catch((err) =>
+            console.error("Failed to generate topic:", err),
+          );
         }
       }
     },
