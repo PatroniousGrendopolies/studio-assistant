@@ -305,7 +305,7 @@ export async function listConversations(
   const sb = createClient();
   let query = sb
     .from("conversations_with_stats")
-    .select("id, session_id, room_id, started_at, message_count, has_flags")
+    .select("id, session_id, room_id, started_at, topic, last_message_at, message_count, has_flags")
     .order("started_at", { ascending: false })
     .limit(100);
 
