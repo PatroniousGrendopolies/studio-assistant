@@ -13,6 +13,7 @@ export const SESSION_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds
 
 export function verifyPassword(password: string): boolean {
   const expected = process.env.ADMIN_PASSWORD;
+  console.log("[auth] ADMIN_PASSWORD set:", !!expected, "length:", expected?.length, "input length:", password?.length);
   if (!expected || !password) return false;
 
   const a = new TextEncoder().encode(password);
