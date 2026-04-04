@@ -6,6 +6,11 @@ import { loadRoom, loadSafetyRules } from "@/lib/content.ts";
 import { assembleSystemPrompt } from "@/lib/prompt.ts";
 import { checkSafetyRules } from "@/lib/safety.ts";
 import { rateLimit } from "@/lib/rate-limit.ts";
+// TODO: re-enable when Supabase is configured
+// import { upsertConversation, saveMessage, getActiveCorrections } from "@/lib/db.ts";
+const upsertConversation = async (..._: unknown[]) => null;
+const saveMessage = async (..._: unknown[]) => {};
+const getActiveCorrections = async (..._: unknown[]) => undefined;
 
 export async function POST(req: Request) {
   try {
@@ -26,11 +31,13 @@ async function handleChat(req: Request) {
 
   let messages: UIMessage[];
   let roomId: string;
+  let sessionId: string | undefined;
 
   try {
     const body = await req.json();
     messages = body.messages;
     roomId = body.roomId;
+    sessionId = body.sessionId;
   } catch {
     return new Response("Invalid request body", { status: 400 });
   }
@@ -53,6 +60,19 @@ async function handleChat(req: Request) {
     return new Response("Rate limit exceeded. Please try again later.", {
       status: 429,
     });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Persist conversation (graceful degradation — chat works without DB)
+  // ---------------------------------------------------------------------------
+
+  let conversationId: string | null = null;
+  if (sessionId) {
+    try {
+      conversationId = await upsertConversation(sessionId, roomId);
+    } catch (err) {
+      console.error("Failed to upsert conversation:", err);
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -101,13 +121,39 @@ async function handleChat(req: Request) {
     if (match) {
       safetyPrefix = `\n\n[SAFETY RULE TRIGGERED — ${match.severity.toUpperCase()}]\nTrigger: ${match.trigger}\nWarning: ${match.warning}\n\nYou MUST address this safety warning prominently at the start of your response before providing any other guidance. Format the warning so it stands out visually (start with "⚠️ Warning:").`;
     }
+
+    // Persist user message (graceful degradation)
+    if (conversationId && userText) {
+      try {
+        await saveMessage(
+          conversationId,
+          "user",
+          userText,
+          match?.ruleId,
+        );
+      } catch (err) {
+        console.error("Failed to save user message:", err);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load corrections (graceful degradation)
+  // ---------------------------------------------------------------------------
+
+  let corrections;
+  try {
+    corrections = await getActiveCorrections(roomId);
+  } catch (err) {
+    console.error("Failed to load corrections:", err);
   }
 
   // ---------------------------------------------------------------------------
   // Build system prompt
   // ---------------------------------------------------------------------------
 
-  const systemPrompt = assembleSystemPrompt(room, safetyRules) + safetyPrefix;
+  const systemPrompt =
+    assembleSystemPrompt(room, safetyRules, corrections) + safetyPrefix;
 
   // ---------------------------------------------------------------------------
   // Convert UI messages to model messages & stream
@@ -129,6 +175,15 @@ async function handleChat(req: Request) {
     model: anthropic("claude-sonnet-4-20250514"),
     system: systemPrompt,
     messages: modelMessages,
+    onFinish: async ({ text }) => {
+      if (conversationId && text) {
+        try {
+          await saveMessage(conversationId, "assistant", text);
+        } catch (err) {
+          console.error("Failed to save assistant message:", err);
+        }
+      }
+    },
   });
 
   return result.toUIMessageStreamResponse();

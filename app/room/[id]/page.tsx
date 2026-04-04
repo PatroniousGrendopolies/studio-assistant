@@ -184,13 +184,15 @@ export default function ChatPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const sessionId = useMemo(() => crypto.randomUUID(), []);
+
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
         api: "/api/chat",
-        body: { roomId },
+        body: { roomId, sessionId },
       }),
-    [roomId],
+    [roomId, sessionId],
   );
 
   const { messages, sendMessage, status, error } = useChat({
@@ -297,9 +299,8 @@ export default function ChatPage() {
         {messages.length === 0 && (
           <div className="flex h-full flex-col items-center justify-center gap-4 px-4">
             <div className="text-center">
-              <p className="text-lg font-semibold text-black">Welcome to {roomDisplayName}!</p>
-              <p className="mt-1 text-sm text-[#303133]">
-                I know every piece of gear in here. Tell me what you&apos;re working on today, or tap a common issue below.
+              <p className="text-sm text-gray-400 leading-relaxed max-w-xs">
+                Welcome to the Autoland Chat Line. I&apos;m here to help. Hit the mic button if you&apos;d rather leave me a voicemail. What seems to be the trouble?
               </p>
             </div>
             <div className="grid w-full max-w-sm grid-cols-2 gap-2">
