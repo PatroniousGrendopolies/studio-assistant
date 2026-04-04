@@ -244,14 +244,7 @@ export default function ChatPage() {
     <div className="flex h-dvh flex-col bg-white text-black">
       {/* Header */}
       <header className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 py-3">
-        <div className="flex items-center gap-2">
-          <a href="/" className="rounded-full p-1 text-[#303133] transition-colors hover:bg-gray-100">
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </a>
-          <h1 className="text-base font-bold uppercase tracking-wide text-black">{roomDisplayName}</h1>
-        </div>
+        <h1 className="text-base font-bold uppercase tracking-wide text-black">AUTOLAND</h1>
         <button
           type="button"
           onClick={() => setShowStaffHelp(true)}
