@@ -100,7 +100,7 @@ Next.js API Route (Node.js runtime, app/api/chat/route.ts)
 Claude API (claude-sonnet-4-20250514)
 ```
 
-**Tech stack:** Next.js 16 + React 19 + Tailwind CSS 4 + Vercel AI SDK (`ai` + `@ai-sdk/anthropic` + `@ai-sdk/react`) + Zod 4 for content validation + `@vercel/kv` for rate limiting. Client uses `useChat()` hook; server uses `streamText()` with `convertToModelMessages()`.
+**Tech stack:** Next.js 16 + React 19 + Tailwind CSS 4 + Vercel AI SDK (`ai` + `@ai-sdk/anthropic` + `@ai-sdk/react`) + Zod 4 for content validation + `@vercel/kv` for rate limiting + Supabase Postgres for chat persistence and admin data. Client uses `useChat()` hook; server uses `streamText()` with `convertToModelMessages()`.
 
 **Model choice:** Uses `claude-sonnet-4-20250514` for all requests. Fast enough for streaming chat and smart enough for safety detection. Opus is overkill for this use case and would increase latency and cost. Revisit only if Sonnet demonstrably misses safety patterns during real-world testing.
 
@@ -261,10 +261,20 @@ app/
   page.tsx                    # Room selector (landing page)
   room/[id]/page.tsx          # Chat interface (per-room)
   api/chat/route.ts           # Chat API endpoint (Node.js runtime)
+  api/admin/login/route.ts    # Admin login endpoint
+  api/admin/logout/route.ts   # Admin logout endpoint
+  admin/layout.tsx            # Admin layout with nav
+  admin/login/page.tsx        # Admin login page
+  admin/conversations/page.tsx      # Conversation list + stats
+  admin/conversations/[id]/page.tsx # Conversation detail + flagging
+  admin/corrections/page.tsx  # Corrections management
   layout.tsx                  # Root layout
   globals.css                 # Tailwind CSS
 components/
   VoiceInput.tsx              # Voice input component (Web Speech API)
+  admin/ConversationActions.tsx  # Flag + correction forms
+  admin/CorrectionsActions.tsx   # Toggle + new correction forms
+  admin/LogoutButton.tsx         # Logout button
 content/
   rooms/room-a/              # Room content (auto-discovered)
     overview.md
@@ -275,9 +285,14 @@ content/
   symptoms/categories.json    # Symptom picker categories
 lib/
   content.ts                  # Content loading + Zod validation
-  prompt.ts                   # System prompt assembly
+  prompt.ts                   # System prompt assembly + corrections
   safety.ts                   # Deterministic keyword pre-scan
   rate-limit.ts               # Vercel KV rate limiter
+  supabase.ts                 # Supabase client singleton
+  auth.ts                     # Admin auth (HMAC sessions)
+  db.ts                       # Database operations + types
+  admin-actions.ts            # Auth-gated server actions
+middleware.ts                 # Admin route protection
 ```
 
 ## Open Questions
@@ -317,11 +332,23 @@ lib/
 9. Bold markdown rendering in assistant messages
 10. Auto-growing textarea for chat input
 
+## What Shipped (v0.2.0.0 — Admin Dashboard)
+
+1. Chat persistence via Supabase Postgres (conversations, messages tables)
+2. Admin dashboard at `/admin` with password login and rate limiting
+3. Conversation browser with stats (total, today, flags, corrections)
+4. Message flagging (incorrect, dangerous, unclear, other) with review notes
+5. Corrections feedback loop: Nigel writes what the bot should have said, corrections injected into system prompt on every request
+6. Auth: HMAC-SHA256 signed cookies, timing-safe password comparison, server action auth
+7. Test suite: auth, DB (mocked Supabase), prompt corrections
+8. Graceful degradation: chat works if Supabase is unavailable
+
 ## Next Steps
 
-1. **Week 1:** Nigel records Google calls walking through Room A procedures. Gemini Note Taker captures notes. Convert to additional SOPs. Test voice input in actual studio environment.
-2. **Week 2:** Print QR codes, test with 3-5 real clients. Collect feedback.
-3. **v2:** Image upload via Claude multimodal API, additional rooms, analytics, session persistence.
+1. **Image troubleshooting (v2):** Photo upload via Claude multimodal API
+2. **Additional rooms:** Add Room B, C configs
+3. **Discord integration:** Pull partner channel discussions into knowledge base
+4. **Analytics:** Usage patterns, common questions, peak hours
 
 ## SOP Creation Workflow
 

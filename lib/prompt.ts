@@ -1,4 +1,5 @@
 import type { RoomContent, SafetyRules } from "@/lib/content.ts";
+import type { Correction } from "@/lib/db.ts";
 
 // ---------------------------------------------------------------------------
 // System prompt assembly
@@ -7,6 +8,7 @@ import type { RoomContent, SafetyRules } from "@/lib/content.ts";
 export function assembleSystemPrompt(
   room: RoomContent,
   safetyRules: SafetyRules,
+  corrections?: Correction[],
 ): string {
   // Extract the first heading from overview.md as the room title
   const titleMatch = room.overview.match(/^#\s+(.+)$/m);
@@ -41,6 +43,23 @@ export function assembleSystemPrompt(
       `⚠️ [${rule.severity.toUpperCase()}]: ${rule.trigger} — ${rule.warning}`,
   );
 
+  // Format corrections if any exist
+  let correctionsSection = "";
+  if (corrections && corrections.length > 0) {
+    const correctionLines = corrections.map((c, i) => {
+      const date = new Date(c.created_at).toLocaleDateString();
+      let entry = `${i + 1}. [${date}] WRONG: "${c.original_message}"\n   CORRECT: "${c.correction}"`;
+      if (c.context) entry += `\n   CONTEXT: ${c.context}`;
+      return entry;
+    });
+
+    correctionsSection = `\n\n## Past Corrections & Clarifications
+The following are corrections from the studio owner based on past conversations.
+Apply these corrections when relevant:
+
+${correctionLines.join("\n\n")}`;
+  }
+
   return `You are the Autoland studio assistant for ${roomTitle}.
 
 Your goal is to help the user set up their session without needing the intervention of the studio owner if possible. Be thorough and meticulous when troubleshooting and help them to diagnose any problems they might encounter.
@@ -59,7 +78,7 @@ ${sopSections}
 
 ## SAFETY RULES — HIGHEST PRIORITY
 ${safetyLines.join("\n")}
-
+${correctionsSection}
 ## How You Behave
 - Use plain, jargon-free language. Never assume the user knows technical terms.
 - Always ask clarifying questions about the user's physical setup before giving instructions.

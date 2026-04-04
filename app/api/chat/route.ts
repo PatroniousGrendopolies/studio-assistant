@@ -6,11 +6,7 @@ import { loadRoom, loadSafetyRules } from "@/lib/content.ts";
 import { assembleSystemPrompt } from "@/lib/prompt.ts";
 import { checkSafetyRules } from "@/lib/safety.ts";
 import { rateLimit } from "@/lib/rate-limit.ts";
-// TODO: re-enable when Supabase is configured
-// import { upsertConversation, saveMessage, getActiveCorrections } from "@/lib/db.ts";
-const upsertConversation = async (..._: unknown[]) => null;
-const saveMessage = async (..._: unknown[]) => {};
-const getActiveCorrections = async (..._: unknown[]) => undefined;
+import { upsertConversation, saveMessage, getActiveCorrections } from "@/lib/db.ts";
 
 export async function POST(req: Request) {
   try {
