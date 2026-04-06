@@ -14,7 +14,7 @@ export function assembleSystemPrompt(
   const titleMatch = room.overview.match(/^#\s+(.+)$/m);
   const roomTitle = titleMatch ? titleMatch[1] : room.id;
 
-  // Format equipment — iterate over all categories dynamically
+  // Format equipment — compact format, no IDs, merge details into one line
   const equipmentLines: string[] = [];
   for (const [category, items] of Object.entries(room.equipment)) {
     if (!Array.isArray(items) || items.length === 0) continue;
@@ -22,25 +22,26 @@ export function assembleSystemPrompt(
     equipmentLines.push(`### ${heading}`);
     for (const item of items) {
       const g = item as Record<string, unknown>;
-      const details: string[] = [];
-      if (g.type) details.push(String(g.type));
-      if (g.location) details.push(`Location: ${g.location}`);
-      if (g.channels) details.push(`Channels: ${g.channels}`);
-      if (g.notes) details.push(String(g.notes));
-      equipmentLines.push(`- **${g.name}**${details.length ? ` — ${details.join(". ")}` : ""}`);
+      const parts: string[] = [];
+      if (g.type) parts.push(String(g.type));
+      if (g.phantomRequired) parts.push("needs phantom");
+      if (g.phantomWarning) parts.push(String(g.phantomWarning));
+      if (g.location) parts.push(String(g.location));
+      if (g.notes) parts.push(String(g.notes));
+      equipmentLines.push(`- ${g.name}${parts.length ? `: ${parts.join(". ")}` : ""}`);
     }
   }
 
-  // Format patchbay — render as JSON-like readable text since structure varies
-  const patchbayText = JSON.stringify(room.patchbay, null, 2);
+  // Format patchbay — condensed text instead of raw JSON
+  const patchbayText = formatPatchbay(room.patchbay);
 
   // Format SOPs
   const sopSections = room.sops.map((sop) => sop.content).join("\n\n---\n\n");
 
-  // Format safety rules
+  // Format safety rules — warnings only, no keyword arrays (pre-scan handles matching)
   const safetyLines = safetyRules.rules.map(
     (rule) =>
-      `⚠️ [${rule.severity.toUpperCase()}]: ${rule.trigger} — ${rule.warning}`,
+      `- [${rule.severity.toUpperCase()}] ${rule.trigger}: ${rule.warning}`,
   );
 
   // Format corrections if any exist
@@ -88,4 +89,56 @@ ${correctionsSection}
 - When walking through steps, go one at a time. Confirm the user completed each step before moving to the next.
 - If the user seems confused or frustrated, offer the symptom picker: "Would it help if I showed you some common problems to pick from?"
 - For access codes, alarm codes, or passwords, always direct users to check their personal onboarding document.`;
+}
+
+// ---------------------------------------------------------------------------
+// Patchbay formatter — condensed text from JSON structure
+// ---------------------------------------------------------------------------
+
+function formatPatchbay(patchbay: Record<string, unknown>): string {
+  const bays = patchbay.bays as Array<Record<string, unknown>> | undefined;
+  if (!bays || !Array.isArray(bays)) return JSON.stringify(patchbay);
+
+  const lines: string[] = [];
+
+  for (const bay of bays) {
+    lines.push(`### ${bay.name}`);
+    if (bay.description) lines.push(String(bay.description));
+
+    const topRow = bay.topRow as Record<string, unknown> | undefined;
+    if (topRow?.sections) {
+      const label = topRow.label ? `${topRow.label}` : "Top row";
+      lines.push(`**${label}:**`);
+      for (const s of topRow.sections as Array<Record<string, unknown>>) {
+        const ch = s.channels || s.channel || "";
+        const det = s.detail || "";
+        lines.push(`- ${s.label}${ch ? ` (${ch})` : ""}${det ? `: ${det}` : ""}`);
+      }
+    }
+
+    const bottomRow = bay.bottomRow as Record<string, unknown> | undefined;
+    if (bottomRow?.sections) {
+      const label = bottomRow.label ? `${bottomRow.label}` : "Bottom row";
+      lines.push(`**${label}:**`);
+      for (const s of bottomRow.sections as Array<Record<string, unknown>>) {
+        const ch = s.channels || s.channel || "";
+        const det = s.detail || "";
+        lines.push(`- ${s.label}${ch ? ` (${ch})` : ""}${det ? `: ${det}` : ""}`);
+      }
+    }
+
+    if (bay.normaling) lines.push(`**Normaling:** ${bay.normaling}`);
+    lines.push("");
+  }
+
+  // Add tips
+  const tips = patchbay.tips as string[] | undefined;
+  if (tips && Array.isArray(tips)) {
+    lines.push("### Tips");
+    for (const tip of tips) {
+      lines.push(`- ${tip}`);
+    }
+  }
+
+  return lines.join("\n");
 }

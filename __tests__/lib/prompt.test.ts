@@ -17,12 +17,11 @@ describe("assembleSystemPrompt", () => {
     expect(prompt).toContain(expectedTitle);
   });
 
-  test("includes safety rules with warning icons", () => {
+  test("includes safety rules with severity labels", () => {
     const prompt = assembleSystemPrompt(room, safetyRules);
 
-    // Each safety rule should appear with the warning emoji prefix
     for (const rule of safetyRules.rules) {
-      expect(prompt).toContain(`\u26a0\ufe0f [${rule.severity.toUpperCase()}]`);
+      expect(prompt).toContain(`[${rule.severity.toUpperCase()}]`);
       expect(prompt).toContain(rule.warning);
     }
   });
