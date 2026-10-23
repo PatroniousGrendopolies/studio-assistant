@@ -12,7 +12,7 @@ describe("assembleSystemPrompt", () => {
 
     // The prompt should reference the room title extracted from overview.md
     const titleMatch = room.overview.match(/^#\s+(.+)$/m);
-    const expectedTitle = titleMatch ? titleMatch[1] : room.id;
+    const expectedTitle = titleMatch ? titleMatch[1]! : room.id;
 
     expect(prompt).toContain(expectedTitle);
   });

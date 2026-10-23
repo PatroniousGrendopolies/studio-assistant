@@ -27,7 +27,7 @@ describe("loadRoom", () => {
     const categories = Object.keys(room.equipment);
     expect(categories.length).toBeGreaterThan(0);
     for (const category of categories) {
-      const items = room.equipment[category];
+      const items = room.equipment[category]!;
       expect(Array.isArray(items)).toBe(true);
       for (const item of items) {
         expect(typeof item.id).toBe("string");
@@ -38,7 +38,7 @@ describe("loadRoom", () => {
 
   test("has preamps with real studio gear", () => {
     const room = loadRoom("room-a");
-    const preamps = room.equipment.preamps;
+    const preamps = room.equipment.preamps!;
     expect(Array.isArray(preamps)).toBe(true);
     expect(preamps.length).toBeGreaterThanOrEqual(6);
   });
