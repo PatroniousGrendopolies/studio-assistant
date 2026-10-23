@@ -7,42 +7,56 @@ import {
   SESSION_COOKIE_NAME,
   SESSION_MAX_AGE,
 } from "@/lib/auth.ts";
+import { getClientIp, memoryRateLimit } from "@/lib/rate-limit.ts";
 
-const LOGIN_WINDOW_SECONDS = 3600;
-const LOGIN_MAX_ATTEMPTS = 5;
+const LOGIN_WINDOW_SECONDS = 15 * 60;
+const LOGIN_MAX_FAILURES = 5;
+const FAILURE_DELAY_MS = 750;
 
-async function loginRateLimit(ip: string): Promise<boolean> {
-  if (!process.env.KV_REST_API_URL) return true;
+// Counts failed attempts only. KV when configured; otherwise (or if KV
+// errors) an in-memory per-instance counter. Never fails open.
+async function loginBlocked(ip: string): Promise<boolean> {
+  const memKey = `admin-login:${ip}`;
+  if (process.env.KV_REST_API_URL) {
+    try {
+      const { kv } = await import("@vercel/kv");
+      const key = `rate-limit:admin-login:${ip}`;
+      const now = Math.floor(Date.now() / 1000);
+      const results = await kv
+        .pipeline()
+        .zremrangebyscore(key, 0, now - LOGIN_WINDOW_SECONDS)
+        .zcard(key)
+        .exec();
+      if (((results[1] as number) ?? 0) >= LOGIN_MAX_FAILURES) return true;
+    } catch (err) {
+      console.error("KV login limit check failed:", err);
+    }
+  }
+  return !memoryRateLimit(memKey, LOGIN_MAX_FAILURES - 1, LOGIN_WINDOW_SECONDS, {
+    record: false,
+  }).success;
+}
 
+async function recordLoginFailure(ip: string): Promise<void> {
+  memoryRateLimit(`admin-login:${ip}`, LOGIN_MAX_FAILURES, LOGIN_WINDOW_SECONDS);
+  if (!process.env.KV_REST_API_URL) return;
   try {
     const { kv } = await import("@vercel/kv");
     const key = `rate-limit:admin-login:${ip}`;
     const now = Math.floor(Date.now() / 1000);
-    const windowStart = now - LOGIN_WINDOW_SECONDS;
-    const member = `${now}:${crypto.randomUUID()}`;
-
     const pipeline = kv.pipeline();
-    pipeline.zadd(key, { score: now, member });
-    pipeline.zremrangebyscore(key, 0, windowStart);
-    pipeline.zcard(key);
+    pipeline.zadd(key, { score: now, member: `${now}:${crypto.randomUUID()}` });
     pipeline.expire(key, LOGIN_WINDOW_SECONDS);
-
-    const results = await pipeline.exec();
-    const count = (results[2] as number) ?? 0;
-    return count <= LOGIN_MAX_ATTEMPTS;
-  } catch {
-    return true;
+    await pipeline.exec();
+  } catch (err) {
+    console.error("KV login failure record failed:", err);
   }
 }
 
 export async function POST(req: Request) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    req.headers.get("x-real-ip") ??
-    "unknown";
+  const ip = getClientIp(req);
 
-  const withinLimit = await loginRateLimit(ip);
-  if (!withinLimit) {
+  if (await loginBlocked(ip)) {
     return new Response("Too many login attempts. Try again later.", {
       status: 429,
     });
@@ -56,7 +70,9 @@ export async function POST(req: Request) {
     return new Response("Invalid request body", { status: 400 });
   }
 
-  if (!password || !verifyPassword(password)) {
+  if (typeof password !== "string" || !password || !verifyPassword(password)) {
+    await recordLoginFailure(ip);
+    await new Promise((r) => setTimeout(r, FAILURE_DELAY_MS));
     return new Response("Incorrect password", { status: 401 });
   }
 

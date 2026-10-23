@@ -5,8 +5,40 @@ import { anthropic } from "@ai-sdk/anthropic";
 import { loadRoom, loadSafetyRules } from "@/lib/content.ts";
 import { assembleSystemPrompt } from "@/lib/prompt.ts";
 import { checkSafetyRules } from "@/lib/safety.ts";
-import { rateLimit } from "@/lib/rate-limit.ts";
+import { rateLimit, getClientIp } from "@/lib/rate-limit.ts";
 import { upsertConversation, saveMessage, getActiveCorrections, generateTopic } from "@/lib/db.ts";
+
+const MAX_BODY_BYTES = 100_000;
+const MAX_MESSAGES = 50;
+const MAX_TEXT_CHARS = 4_000;
+const MAX_ID_CHARS = 100;
+
+// The app is text-only. Accept only text parts so the AI SDK never fetches an
+// attacker-supplied URL (file/image parts) server-side.
+function validateMessages(messages: unknown): messages is UIMessage[] {
+  if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
+    return false;
+  }
+  return messages.every((m) => {
+    if (!m || typeof m !== "object") return false;
+    const msg = m as Record<string, unknown>;
+    if (msg.role !== "user" && msg.role !== "assistant") return false;
+    if (typeof msg.content === "string" && !Array.isArray(msg.parts)) {
+      return msg.content.length <= MAX_TEXT_CHARS;
+    }
+    return (
+      Array.isArray(msg.parts) &&
+      msg.parts.every(
+        (p) =>
+          p &&
+          typeof p === "object" &&
+          (p as { type?: unknown }).type === "text" &&
+          typeof (p as { text?: unknown }).text === "string" &&
+          (p as { text: string }).text.length <= MAX_TEXT_CHARS,
+      )
+    );
+  });
+}
 
 export async function POST(req: Request) {
   try {
@@ -14,7 +46,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("Unhandled error in chat route:", err);
     return new Response(
-      JSON.stringify({ error: String(err), stack: (err as Error)?.stack }),
+      JSON.stringify({ error: "Internal server error" }),
       { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
@@ -30,7 +62,11 @@ async function handleChat(req: Request) {
   let sessionId: string | undefined;
 
   try {
-    const body = await req.json();
+    const raw = await req.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return new Response("Request too large", { status: 413 });
+    }
+    const body = JSON.parse(raw);
     messages = body.messages;
     roomId = body.roomId;
     sessionId = body.sessionId;
@@ -38,18 +74,21 @@ async function handleChat(req: Request) {
     return new Response("Invalid request body", { status: 400 });
   }
 
-  if (!roomId || typeof roomId !== "string") {
+  if (!roomId || typeof roomId !== "string" || roomId.length > MAX_ID_CHARS) {
     return new Response("Missing or invalid roomId", { status: 400 });
+  }
+  if (sessionId !== undefined && (typeof sessionId !== "string" || sessionId.length > MAX_ID_CHARS)) {
+    return new Response("Invalid sessionId", { status: 400 });
+  }
+  if (!validateMessages(messages)) {
+    return new Response("Invalid messages", { status: 400 });
   }
 
   // ---------------------------------------------------------------------------
   // Rate limit
   // ---------------------------------------------------------------------------
 
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    req.headers.get("x-real-ip") ??
-    "unknown";
+  const ip = getClientIp(req);
 
   const { success: withinLimit } = await rateLimit(ip);
   if (!withinLimit) {
@@ -177,6 +216,12 @@ async function handleChat(req: Request) {
       },
     },
     messages: modelMessages,
+    maxOutputTokens: 1500,
+    // Defense in depth: never download remote files server-side
+    experimental_download: async (requests) =>
+      requests.map(() => {
+        throw new Error("Remote file downloads are disabled");
+      }),
     onFinish: async ({ text }) => {
       if (conversationId && text) {
         try {
