@@ -1,3 +1,4 @@
+import { requireAdminPage } from "@/lib/auth";
 import Link from "next/link";
 import { getStats, listConversations } from "@/lib/db";
 
@@ -17,6 +18,7 @@ function formatDuration(startedAt: string, lastMessageAt: string | null): string
 }
 
 export default async function ConversationsPage() {
+  await requireAdminPage();
   const [stats, conversations] = await Promise.all([
     getStats(),
     listConversations(),

@@ -1,3 +1,4 @@
+import { requireAdminPage } from "@/lib/auth";
 import { listCorrections } from "@/lib/db";
 import { getAvailableRooms } from "@/lib/content";
 import {
@@ -6,6 +7,7 @@ import {
 } from "@/components/admin/CorrectionsActions";
 
 export default async function CorrectionsPage() {
+  await requireAdminPage();
   const [corrections, rooms] = await Promise.all([
     listCorrections(),
     Promise.resolve(getAvailableRooms()),

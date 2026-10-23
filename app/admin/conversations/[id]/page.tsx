@@ -1,3 +1,4 @@
+import { requireAdminPage } from "@/lib/auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getConversation } from "@/lib/db";
@@ -11,6 +12,7 @@ export default async function ConversationDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdminPage();
   const { id } = await params;
   const data = await getConversation(id);
 

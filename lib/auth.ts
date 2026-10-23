@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 // ---------------------------------------------------------------------------
 // Admin auth — single-user password + HMAC-signed session cookie
@@ -97,5 +98,15 @@ export async function requireAdmin(): Promise<void> {
   const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
   if (!token || !(await verifySessionToken(token))) {
     throw new Error("Unauthorized");
+  }
+}
+
+// For admin pages: re-check the session in the page itself (defense in depth
+// beyond middleware) and send unauthenticated visitors to the login page.
+export async function requireAdminPage(): Promise<void> {
+  try {
+    await requireAdmin();
+  } catch {
+    redirect("/admin/login");
   }
 }
